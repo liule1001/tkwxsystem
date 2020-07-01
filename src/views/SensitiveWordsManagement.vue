@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <h1>参数添加页面</h1>
+    <h1>敏感词管理</h1>
   </div>
 </template>
 
