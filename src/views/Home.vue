@@ -1,20 +1,18 @@
 <template>
-    <el-container class="total">
-        <el-aside class="home-aside" :class="{'aside-narrow':isCollapse}">
-            <Navigation 
-            @collapseEvent="changeCollapseF"
-            />
-        </el-aside>
+    <el-container>
+        <el-header>
+            <homeHeader />
+        </el-header>
         <el-container>
-            <el-header>
-                <homeHeader :name="nameObj.name" @change="childChange"/>
-            </el-header>
+            <el-aside 
+            class="home-aside" 
+            :span="2"
+            >
+                <Navigation />
+            </el-aside>
             <el-main>
                 <router-view></router-view>
             </el-main>
-            <el-footer>
-                <homeFooter />
-            </el-footer>
         </el-container>
     </el-container>
 </template>
@@ -22,35 +20,24 @@
 <script>
 import Navigation from "@/components/HomeNav.vue";
 import homeHeader from "@/components/homeHeader.vue";
-import homeFooter from "@/components/homeFooter.vue";
 
 export default {
     data() {
         return {
-            isCollapse: true,
-            nameObj:{
-                name:"ellen"
-            },
-            name:"王五"
+
         };
     },
 
     components: {
         Navigation,
-        homeHeader,
-        homeFooter
+        homeHeader
     },
 
     mounted() {},
 
     methods: {
-        changeCollapseF(data){
-            this.isCollapse = data
-        },
-        childChange(data){
-            this.nameObj.name = data
-        }
-    },
+        
+    }
 };
 </script>
 
@@ -58,17 +45,15 @@ export default {
 @import "../assets/scss/common.scss";
 
 .el-container {
-    height: 100% ;
+    height: 100%;
 }
 .el-aside {
-    background-color: #fff;
-    color: #333;
+    background: #252a2f;
+}
+.el-main {
+    background: #efefef;
 }
 .home-aside {
-    width: 230px !important;
-    border-right: 1px solid #e6e6e6;
-}
-.aside-narrow {
-    width: 65px !important; 
+    width: 16% !important;
 }
 </style>
