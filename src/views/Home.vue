@@ -9,7 +9,7 @@
             <el-header>
                 <homeHeader :name="nameObj.name" @change="childChange"/>
             </el-header>
-            <el-main class="content">
+            <el-main>
                 <router-view></router-view>
             </el-main>
             <el-footer>
@@ -70,8 +70,5 @@ export default {
 }
 .aside-narrow {
     width: 65px !important; 
-}
-.content {
-    margin-top: 100px;
 }
 </style>

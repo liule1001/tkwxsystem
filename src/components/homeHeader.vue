@@ -1,22 +1,14 @@
 <template>
     <div>
-        <el-button type="primary" size="mini" @click="changeName">父子传值</el-button>
-        <el-button type="primary" size="mini">兄弟传值</el-button>
-         我的性别是
-        <span>{{sex}}</span>
         <div class="loginBox">
             <span>欢迎您，</span>
             <span>{{childName}}</span>
             <span class="logout">退出</span>
         </div>
-        <HomeFooter/>
-        
     </div>
 </template>
 
 <script>
-import HomeFooter from "./homeFooter"
-import bus from "./eventBus"
 export default {
     data() {
         return {
@@ -33,15 +25,8 @@ export default {
         }
     },
     components:{
-        HomeFooter
     },
     methods: {
-        changeName(){
-            console.log('this.childName',this.childName)
-            // this.childName = this.childName == "赵六"?"王五":"赵六";
-            this.childName = this.childName == "ellen"?"marry":"ellen";
-            this.$emit('change', this.childName)
-        },
         
         // testRest(...valueArr){
         //     // console.log(valueArr)
@@ -53,9 +38,6 @@ export default {
     mounted() {
     //    this.testRest(1,2,3)
     //    this.testParams(...this.params)
-    bus.$on("sendMsg",(data)=>{
-        this.sex = data
-    })
     },
 };
 </script>
