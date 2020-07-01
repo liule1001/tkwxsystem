@@ -16,6 +16,17 @@
         </el-table-column>
       </el-table>
     </div>
+    <div v-if="modalShow">
+      <el-dialog title="聊天内容" :visible.sync="modalShow" center>
+ <div>
+   <span>一一</span>
+<span>二二</span>
+ </div>
+ <div>
+   聊天内容
+ </div>
+      </el-dialog>
+    </div>
   </div>
 </template>
 
@@ -42,12 +53,20 @@ export default {
           zip: "员工"
         }
       ],
-      modalShow: false
+      modalShow: false,
+       form: {
+          name: '1',
+          region: '1',
+          date1: '1',
+          date2: '1',
+          delivery: false,
+          type: [],
+          resource: '1',
+          desc: '1'
+        },
     };
   },
-  created() {
-    
-  },
+  created() {},
   methods: {
     // deleteRow(index, rows) {
     //   // rows.splice(index, 1);
@@ -57,7 +76,6 @@ export default {
     details(index, rows) {
       console.log(index, rows);
       this.modalShow = !this.modalShow;
-      alert(this.modalShow);
     }
   }
 };
