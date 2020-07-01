@@ -8,7 +8,7 @@
             class="home-aside" 
             :span="2"
             >
-                <Navigation />
+                <Navigation/>
             </el-aside>
             <el-main>
                 <router-view></router-view>
