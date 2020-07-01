@@ -1,10 +1,10 @@
 <template>
     <div>
-        <!-- <div class="loginBox">
+        <div class="loginBox">
             <span>欢迎您，</span>
             <span>王五</span>
             <span class="logout">退出</span>
-        </div> -->
+        </div>
     </div>
 </template>
 

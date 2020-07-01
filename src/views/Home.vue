@@ -1,6 +1,7 @@
 <template>
     <el-container>
         <el-header>
+            <h1>BGC企业微信管理后台</h1>
             <!-- <HomeHeader /> -->
         </el-header>
         <el-container>
@@ -49,6 +50,10 @@ export default {
 }
 .el-aside {
     background: #252a2f;
+}
+.el-header {
+    background: #252a2f;
+    color: #ffffff;
 }
 .el-main {
     background: #efefef;
