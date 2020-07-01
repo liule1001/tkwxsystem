@@ -1,29 +1,13 @@
 <template>
     <div class="left-aside">
-        <!-- <div class="navTop" >
-            <div class="iconBox" title="可以放昆仑银行图标"></div>
-            <router-link class="title" to="/">昆仑银行监控系统</router-link>
-        </div> -->
-        <div class="navTop" :class="{'hideTitle':isCollapse}">
-            <router-link class="title" to="/">
-                <div class="iconBox" title="可以放昆仑银行图标"></div>
-                <span>昆仑银行监控系统</span>  
-            </router-link>
-        </div>
-        <div>
-            <div>
-                <i class="icon-menu el-icon-s-unfold" @click="changeCollapse" v-show="isCollapse" title="展开"></i>
-                <i class="icon-menu el-icon-s-fold" @click="changeCollapse" v-show="!isCollapse" title="关闭"></i>
-            </div>
-        </div>
         <el-menu
-            class="el-menu-vertical-demo"
+            default-active="2"
             :default-openeds="openMeun"
-            :default-active="onRoutes"
             :router="true"
-            @open="handleOpen"
-            @close="handleClose"
-            :collapse="isCollapse"
+            class="el-menu-vertical-demo"
+            background-color="#252a2f"
+            text-color="#fff"
+            active-text-color="#fff"
         >
             <el-menu-item index="/dataStatistics">
                 <i class="el-icon-film"></i>
@@ -60,23 +44,12 @@
 export default {
     data() {
         return {
-            openMeun: ["3", "4", "1", "1-1", "1-2"],
-            onRoutes: "/TransactionSearch",
+            openMeun: ["3", "4"],
+            onRoutes: "/dataStatistics",
             isCollapse: true
         };
     },
-    methods: {
-        changeCollapse(){
-            this.isCollapse = !this.isCollapse;
-            this.$emit('collapseEvent',this.isCollapse)
-        },
-        handleOpen(){
-
-        },
-        handleClose(){
-            
-        }
-    },
+    methods: {},
     mounted() {
         // console.log(this.$route.path);
         // 指定默认页面路由
@@ -90,41 +63,13 @@ export default {
 <style lang='scss' rel='stylesheet/scss' scoped>
 @import "../assets/scss/common.scss";
 @import "../assets/scss/config.scss";
-
-.navTop {
-    height: 80px;
-    background-color: $bg-color;
-    .iconBox {
-        float: left;
-        height: 40px;
-        width: 40px;
-        margin: 20px 0 0 10px;
-        background-color: #fff;
-    }
-    span {
-        float: left;
-        height: 40px;
-        width: 150px;
-        margin: 20px 0 0 15px;
-        color: #fff;
-        font-size: 18px;
-        line-height: 40px;
-    }
-}
-.hideTitle {
-    .title span {
-        display: none;
-    }
-}
 .el-menu {
     border: none;
 }
-.icon-menu {
-    margin: 10px 0 0 15px;
-    font-size: 30px;
-    cursor: pointer;
-    color:  $bg-color;
-    border: 1px solid #ddd;
-    border-radius: 2px;
+.el-menu-item:hover {
+    background: #14b5b0 !important;
+}
+.el-submenu__title:hover {
+    background: rgb(37,42,47) !important;
 }
 </style>

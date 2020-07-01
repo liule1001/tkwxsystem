@@ -32,7 +32,7 @@ const HomeArr = [
         path: "/passiveResponse",
         component: passiveResponse
     }]
-// 配置路由 首页为仪表盘页面
+// 配置路由
 const routes = [{
     path: '/',
     component: Home
