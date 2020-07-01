@@ -69,7 +69,11 @@ export default {
 .el-menu-item:hover {
     background: #14b5b0 !important;
 }
+.el-menu-item.is-active {
+    background: #14b5b0 !important;
+}
 .el-submenu__title:hover {
     background: rgb(37,42,47) !important;
 }
+
 </style>
