@@ -1,7 +1,7 @@
 <template>
     <el-container>
         <el-header>
-            <HomeHeader />
+            <!-- <HomeHeader /> -->
         </el-header>
         <el-container>
             <el-aside 
@@ -19,7 +19,7 @@
 
 <script>
 import Navigation from "@/components/HomeNav.vue";
-import HomeHeader from "@/components/HomeHeader.vue";
+// import HomeHeader from "@/components/HomeHeader.vue";
 
 export default {
     data() {
@@ -30,7 +30,7 @@ export default {
 
     components: {
         Navigation,
-        HomeHeader
+        // HomeHeader
     },
 
     mounted() {},
