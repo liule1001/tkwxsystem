@@ -50,18 +50,10 @@ export default {
         };
     },
     mounted() {
-<<<<<<< HEAD
       
     },
     methods: {
       
-=======
-        
-        
-    },
-    methods: {
-       
->>>>>>> 7445d1693ad7df4509c3cf94d418085618fe6f89
     }
 };
 </script>
