@@ -25,12 +25,12 @@
             @close="handleClose"
             :collapse="isCollapse"
         >
-            <el-menu-item index="/dashbord">
+            <el-menu-item index="/dataStatistics">
                 <i class="el-icon-film"></i>
                 <span slot="title">数据统计</span>
             </el-menu-item>
 
-            <el-menu-item index="/dashbord">
+            <el-menu-item index="/sessionBackup">
                 <i class="el-icon-film"></i>
                 <span slot="title">会话备份</span>
             </el-menu-item>
@@ -40,8 +40,8 @@
                     <i class="el-icon-search"></i>
                     <span>敏感词</span>
                 </template>
-                <el-menu-item index="/TransactionSearch">触发敏感词</el-menu-item>
-                <el-menu-item index="/EventSearch">敏感词管理</el-menu-item>
+                <el-menu-item index="/triggeSensitiveWords">触发敏感词</el-menu-item>
+                <el-menu-item index="/sensitiveWordsManagement">敏感词管理</el-menu-item>
             </el-submenu>
 
             <el-submenu index="4">
@@ -49,8 +49,8 @@
                     <i class="el-icon-s-platform"></i>
                     <span>客户响应</span>
                 </template>
-                <el-menu-item index="/MonitorDetails">主动响应</el-menu-item>
-                <el-menu-item index="/MonitorEmphasis">被动响应</el-menu-item>
+                <el-menu-item index="/activeResponse">主动响应</el-menu-item>
+                <el-menu-item index="/passiveResponse">被动响应</el-menu-item>
             </el-submenu>
         </el-menu>
     </div>

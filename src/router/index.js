@@ -1,57 +1,41 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-const Dashbord = () =>import('../views/Dashbord.vue')
 const Home = () =>import('../views/Home.vue')
 const Error = () =>import('../views/404.vue')
-const MonitorEmphasis = () => import('../views/MonitorEmphasis.vue')
-const MonitorDetails = () => import('../views/MonitorDetails.vue')
-const ParameterAdd = () =>import('../views/ParameterAdd.vue')
-const ParameterManagement = () =>import('../views/ParameterManagement.vue')
-const RoleManagement = () =>import('../views/RoleManagement.vue')
-const EventSearch = () =>import('../views/EventSearch.vue')
-const TransactionSearch = () =>import('../views/TransactionSearch.vue')
-const WarningList = () =>import('../views/WarningList.vue')
-const WarningSet = () =>import('../views/WarningSet.vue')
+const dataStatistics = () =>import('../views/DataStatistics.vue')
+const sessionBackup = () => import('../views/SessionBackup.vue')
+const triggeSensitiveWords = () => import('../views/TriggeSensitiveWords.vue')
+const sensitiveWordsManagement = () =>import('../views/SensitiveWordsManagement.vue')
+const activeResponse = () =>import('../views/ActiveResponse.vue')
+const passiveResponse = () =>import('../views/PassiveResponse.vue')
 
 Vue.use(VueRouter)
 // 在这里配置路由即可
 const HomeArr = [
     {
-        path: "/MonitorEmphasis",
-        component: MonitorEmphasis
+        path: '/dataStatistics',
+        component: dataStatistics
+    },
+    {
+        path: "/sessionBackup",
+        component: sessionBackup
     }, {
-        path: "/MonitorDetails",
-        component: MonitorDetails
+        path: "/triggeSensitiveWords",
+        component: triggeSensitiveWords
     }, {
-        path: "/ParameterAdd",
-        component: ParameterAdd
+        path: "/sensitiveWordsManagement",
+        component: sensitiveWordsManagement
     }, {
-        path: "/ParameterManagement",
-        component: ParameterManagement
+        path: "/activeResponse",
+        component: activeResponse
     }, {
-        path: "/RoleManagement",
-        component: RoleManagement
-    }, {
-        path: "/EventSearch",
-        component: EventSearch
-    }, {
-        path: "/TransactionSearch",
-        component: TransactionSearch
-    }, {
-        path: "/WarningList",
-        component: WarningList
-    }, {
-        path: "/WarningSet",
-        component: WarningSet
+        path: "/passiveResponse",
+        component: passiveResponse
     }]
 // 配置路由 首页为仪表盘页面
 const routes = [{
     path: '/',
     component: Home
-},
-{
-    path: '/Dashbord',
-    component: Dashbord
 },
 {
     path: '/Home',
