@@ -1,7 +1,7 @@
 <template>
     <el-container>
         <el-header>
-            <h1>BGC企业微信管理后台</h1>
+            <h3>BGC企业微信管理后台</h3>
             <!-- <HomeHeader /> -->
         </el-header>
         <el-container>
@@ -44,9 +44,16 @@ export default {
 
 <style lang='scss' rel='stylesheet/scss'>
 @import "../assets/scss/common.scss";
-
+h3 {
+    letter-spacing: 1.5px;
+    font-size: 22px;
+}
+.el-header {
+    height: 70px !important;
+}
 .el-container {
     height: 100%;
+    
 }
 .el-aside {
     background: #252a2f;
