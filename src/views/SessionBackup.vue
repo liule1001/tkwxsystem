@@ -1,47 +1,81 @@
 <template>
-    <div class="about">
-        <h1>监控重点指标页面</h1>
-        <div id="myChart" :style="{width: '300px', height: '300px'}"></div>
+    <div>
+        <el-col>
+            <h5>员工列表</h5>
+            <el-menu
+            default-active="2"
+            :default-openeds="openMeun"
+            :router="true"
+            class="el-menu-vertical-demo"
+            background-color="#ddd"
+            text-color="#333"
+            active-text-color="#333"
+        >
+            <el-submenu index="1">
+                <template slot="title">
+                    <span>敏感词</span>
+                </template>
+                <el-menu-item>触发敏感词</el-menu-item>
+                <el-menu-item>敏感词管理</el-menu-item>
+            </el-submenu>
+
+            <el-submenu index="2">
+                <template slot="title">
+                    <span>客户响应</span>
+                </template>
+                <el-menu-item>主动响应</el-menu-item>
+                <el-menu-item>被动响应</el-menu-item>
+            </el-submenu>
+        </el-menu>
+        </el-col>
+        <el-col>
+            <h5>会话列表</h5>
+            <el-menu
+            default-active="2"
+            :default-openeds="openMeun"
+            :router="true"
+            class="el-menu-vertical-demo"
+            background-color="#252a2f"
+            text-color="#fff"
+            active-text-color="#fff"
+        >
+            <el-menu-item>
+                <span slot="title">数据统计</span>
+            </el-menu-item>
+
+            <el-menu-item>
+                <span slot="title">会话备份</span>
+            </el-menu-item>
+        </el-menu>
+        </el-col>
+        <el-col>
+            <h5>聊天记录</h5>
+            <Chat />
+        </el-col>
     </div>
 </template>
 
 <script>
+import Chat from "@/components/Chat.vue";
 export default {
     name: "hello",
     data() {
         return {
-            msg: "Welcome to Your Vue.js App"
+           
         };
     },
-    mounted() {
-        this.drawLine();
+    components: {
+        Chat
     },
+    mounted() {},
     methods: {
-        drawLine() {
-            // 基于准备好的dom，初始化echarts实例
-            let myChart = this.$echarts.init(
-                document.getElementById("myChart")
-            );
-            // 绘制图表
-            myChart.setOption({
-                title: { text: "在Vue中使用echarts" },
-                tooltip: {},
-                xAxis: {
-                    data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
-                },
-                yAxis: {},
-                series: [
-                    {
-                        name: "销量",
-                        type: "bar",
-                        data: [5, 20, 36, 10, 10, 20]
-                    }
-                ]
-            });
-        }
+        
     }
 };
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
+@import "../assets/scss/sessionBack.scss";
+
+
 </style>
