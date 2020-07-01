@@ -1,7 +1,7 @@
 <template>
     <el-container>
         <el-header>
-            <homeHeader />
+            <HomeHeader />
         </el-header>
         <el-container>
             <el-aside 
@@ -19,7 +19,7 @@
 
 <script>
 import Navigation from "@/components/HomeNav.vue";
-import homeHeader from "@/components/homeHeader.vue";
+import HomeHeader from "@/components/HomeHeader.vue";
 
 export default {
     data() {
@@ -30,7 +30,7 @@ export default {
 
     components: {
         Navigation,
-        homeHeader
+        HomeHeader
     },
 
     mounted() {},
@@ -54,6 +54,7 @@ export default {
     background: #efefef;
 }
 .home-aside {
-    width: 16% !important;
+    width: 14% !important;
+    min-width: 200px;
 }
 </style>
