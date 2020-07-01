@@ -1,14 +1,14 @@
 <template>
     <el-container>
         <el-header>
-            <HomeHeader />
+            <HomeHeader/>
         </el-header>
         <el-container>
             <el-aside 
             class="home-aside" 
             :span="2"
             >
-                <Navigation />
+                <Navigation/>
             </el-aside>
             <el-main>
                 <router-view></router-view>
