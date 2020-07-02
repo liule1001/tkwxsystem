@@ -1,97 +1,95 @@
 <template>
-    <div clsss="sessionBackup">
+    <div>
         <el-col class="staffList">
             <h5>员工列表</h5>
-            <div class="staffItems">
-                <el-menu
-                    default-active="2"
-                    class="el-menu-vertical-demo"
-                    background-color="#ddd"
-                    text-color="#333"
-                    active-text-color="#333"
-                >
-                    <el-submenu index="1">
-                        <template slot="title">
-                            <span>敏感词</span>
-                        </template>
-                        <el-menu-item>
-                            <staff />
-                        </el-menu-item>
-                        <el-menu-item>
-                            <staff />
-                        </el-menu-item>
-                        <el-menu-item>
-                            <staff />
-                        </el-menu-item>
-                    </el-submenu>
+            <el-menu
+                default-active="2"
+                class="el-menu-vertical-demo"
+                background-color="#ddd"
+                text-color="#333"
+                active-text-color="#333"
+            >
+                <el-submenu index="1">
+                    <template slot="title">
+                        <span>敏感词</span>
+                    </template>
+                    <el-menu-item>
+                        <staff />
+                    </el-menu-item>
+                    <el-menu-item>
+                        <staff />
+                    </el-menu-item>
+                    <el-menu-item>
+                        <staff />
+                    </el-menu-item>
+                </el-submenu>
 
-                    <el-submenu index="2">
-                        <template slot="title">
-                            <span>客户响应</span>
-                        </template>
-                        <el-menu-item>
-                            <staff />
-                        </el-menu-item>
-                        <el-menu-item>
-                            <staff />
-                        </el-menu-item>
-                        <el-menu-item>
-                            <staff />
-                        </el-menu-item>
-                        <el-menu-item>
-                            <staff />
-                        </el-menu-item>
-                        <el-menu-item>
-                            <staff />
-                        </el-menu-item>
-                        <el-menu-item>
-                            <staff />
-                        </el-menu-item>
-                        <el-menu-item>
-                            <staff />
-                        </el-menu-item>
-                        <el-menu-item>
-                            <staff />
-                        </el-menu-item>
-                        <el-menu-item>
-                            <staff />
-                        </el-menu-item>
-                        <el-menu-item>
-                            <staff />
-                        </el-menu-item>
-                        <el-menu-item>
-                            <staff />
-                        </el-menu-item>
-                        <el-menu-item>
-                            <staff />
-                        </el-menu-item>
-                        <el-menu-item>
-                            <staff />
-                        </el-menu-item>
-                        <el-menu-item>
-                            <staff />
-                        </el-menu-item>
-                        <el-menu-item>
-                            <staff />
-                        </el-menu-item>
-                        <el-menu-item>
-                            <staff />
-                        </el-menu-item>
-                        <el-menu-item>
-                            <staff />
-                        </el-menu-item>
-                        <el-menu-item>
-                            <staff />
-                        </el-menu-item>
-                        <el-menu-item>
-                            <staff />
-                        </el-menu-item>
-                        <el-menu-item>
-                            <staff />
-                        </el-menu-item>
-                    </el-submenu>
-                </el-menu>
-            </div>
+                <el-submenu index="2">
+                    <template slot="title">
+                        <span>客户响应</span>
+                    </template>
+                    <el-menu-item>
+                        <staff />
+                    </el-menu-item>
+                    <el-menu-item>
+                        <staff />
+                    </el-menu-item>
+                    <el-menu-item>
+                        <staff />
+                    </el-menu-item>
+                    <el-menu-item>
+                        <staff />
+                    </el-menu-item>
+                    <el-menu-item>
+                        <staff />
+                    </el-menu-item>
+                    <el-menu-item>
+                        <staff />
+                    </el-menu-item>
+                    <el-menu-item>
+                        <staff />
+                    </el-menu-item>
+                    <el-menu-item>
+                        <staff />
+                    </el-menu-item>
+                    <el-menu-item>
+                        <staff />
+                    </el-menu-item>
+                    <el-menu-item>
+                        <staff />
+                    </el-menu-item>
+                    <el-menu-item>
+                        <staff />
+                    </el-menu-item>
+                    <el-menu-item>
+                        <staff />
+                    </el-menu-item>
+                    <el-menu-item>
+                        <staff />
+                    </el-menu-item>
+                    <el-menu-item>
+                        <staff />
+                    </el-menu-item>
+                    <el-menu-item>
+                        <staff />
+                    </el-menu-item>
+                    <el-menu-item>
+                        <staff />
+                    </el-menu-item>
+                    <el-menu-item>
+                        <staff />
+                    </el-menu-item>
+                    <el-menu-item>
+                        <staff />
+                    </el-menu-item>
+                    <el-menu-item>
+                        <staff />
+                    </el-menu-item>
+                    <el-menu-item>
+                        <staff />
+                    </el-menu-item>
+                </el-submenu>
+            </el-menu>
         </el-col>
         <el-col class="sessionList">
             <h5>会话列表</h5>
@@ -106,6 +104,55 @@
                     <Session />
                 </el-menu-item>
 
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
                 <el-menu-item>
                     <Session />
                 </el-menu-item>
@@ -139,16 +186,21 @@ export default {
 
 <style lang="scss" rel="stylesheet/scss" >
 @import "../assets/scss/sessionBack.scss";
-.sessionBackup .staffItems {
-    max-height: calc(100vh - 170px);
-    overflow: hidden;
-    overflow-y: auto;
-}
-.sessionBackup .el-menu-vertical-demo {
-    height: auto;
-}
+// .sessionBackup {
+//     height: calc(100vh - 120px);
+//     width: 100%;
+// }
+// .sessionBackup .el-menu {
+//     max-height: calc(100vh - 170px);
+//     overflow: hidden;
+//     overflow-y: auto;
+// }
 .staffList,
 .sessionList {
+    .el-menu-vertical-demo {
+        max-height: calc(100vh - 170px);
+        overflow-y: auto;
+    }
     .el-submenu__title {
         border-bottom: 1px solid #ccc;
     }
