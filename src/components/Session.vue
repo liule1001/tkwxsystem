@@ -1,5 +1,5 @@
 <template>
-    <div class="sessionBox">
+    <div class="sessionVueBox">
         <div class="picBox">
             <img src="1231" alt="" class="staffPic">
             
@@ -43,7 +43,7 @@ export default {
 
 <style lang='scss' rel='stylesheet/scss'>
 @import "../assets/scss/common.scss";
-.sessionBox {
+.sessionVueBox {
     width: 100%;
     height: 60px;
     display: flex;

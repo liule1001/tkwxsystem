@@ -63,7 +63,7 @@ h3 {
     color: #ffffff;
 }
 .el-main {
-    background: #efefef;
+    // background: #efefef;
 }
 .home-aside {
     width: 14% !important;
