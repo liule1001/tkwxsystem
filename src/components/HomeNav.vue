@@ -46,7 +46,6 @@ export default {
         return {
             openMeun: ["3", "4"],
             onRoutes: "/dataStatistics",
-            isCollapse: true
         };
     },
     methods: {},
