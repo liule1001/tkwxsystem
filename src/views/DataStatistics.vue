@@ -1,20 +1,20 @@
 <template>
   <div class="about">
-    <div class="elRow">
-      <div class="elDate">
-        <el-button  size="small" >当日</el-button>
-        <el-button  size="small" >昨日</el-button>
-        <el-button  size="small" >本周</el-button>
-        <el-button  size="small" >本月</el-button>
-      </div>
+    <div class="elRow" style="width: 100%">
+      <el-radio-group v-model="radio1">
+        <el-radio-button label="本日" fill="#14b5b0"></el-radio-button>
+        <el-radio-button label="昨日"></el-radio-button>
+        <el-radio-button label="本周"></el-radio-button>
+        <el-radio-button label="本月"></el-radio-button>
+        <el-radio-button label="自定义时段"></el-radio-button>
+      </el-radio-group>
       <div class="elTime">
-        <el-button  size="small" >自定义时段</el-button>
-        <el-button  size="small" disabled>起始日期</el-button>
-        <span>到</span>
-        <el-button  size="small" disabled>终止日期</el-button>
-        <el-button  size="small" >查询</el-button>
+        <el-button size="small" disabled>起始日期</el-button>
+        <span class="elTimeSpan">到</span>
+        <el-button size="small" disabled>终止日期</el-button>
+        <el-button size="small">查询</el-button>
       </div>
-      <el-button  size="small" >导出Excle</el-button>
+      <el-button size="small">导出Excle</el-button>
     </div>
     <el-table :data="tableData" style="width: 100%">
       <el-table-column prop="name" label="成员姓名" width="80"></el-table-column>
@@ -46,6 +46,7 @@
 export default {
   data() {
     return {
+      radio1: "本日",
       tableData: [
         {
           name: "一一",
@@ -71,13 +72,24 @@ export default {
 };
 </script>
 <style lang="scss" rel="stylesheet/scss" scoped>
-.el-button:focus, .el-button:hover{
+.el-button:focus,
+.el-button:hover {
   color: #14b5b0 !important;
+}
+.el-radio-button {
+  margin-right: 20px;
 }
 .elRow {
   display: flex;
-  .elDate{
+  justify-content: space-evenly;
+  .elDate {
     margin-right: 20px;
+  }
+  .elTime {
+    margin-right: 20px;
+    .elTimeSpan {
+      margin: 0 20px;
+    }
   }
 }
 </style>
