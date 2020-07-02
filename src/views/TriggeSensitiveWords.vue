@@ -39,16 +39,16 @@ export default {
         {
           date: "一一",
           name: "客户",
-          province: "2020-07-01 12：12：12",
-          city: "红色关键字",
+          province: <div><div>2020-07-01</div><div>12：12：12</div></div> ,
+          city: <div style="color:red">12345</div>,
           address: "二二",
           zip: "员工"
         },
         {
           date: "三三",
           name: "客户",
-          province: "2020-07-01 12：12：12",
-          city: "红色关键字",
+          province: <div><div>2020-07-01</div><div>12：12：12</div></div>,
+          city: <div>触发了<span style="color:red">红色敏感字</span></div>,
           address: "四四",
           zip: "员工"
         }
