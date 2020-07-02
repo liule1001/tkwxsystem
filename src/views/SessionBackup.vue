@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="sessionBack">
         <el-col class="staffList">
             <h5>员工列表</h5>
             <el-menu
@@ -156,6 +156,76 @@
                 <el-menu-item>
                     <Session />
                 </el-menu-item>
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
             </el-menu>
         </el-col>
         <el-col>
@@ -186,17 +256,9 @@ export default {
 
 <style lang="scss" rel="stylesheet/scss" >
 @import "../assets/scss/sessionBack.scss";
-// .sessionBackup {
-//     height: calc(100vh - 120px);
-//     width: 100%;
-// }
-// .sessionBackup .el-menu {
-//     max-height: calc(100vh - 170px);
-//     overflow: hidden;
-//     overflow-y: auto;
-// }
-.staffList,
-.sessionList {
+
+.sessionBack .staffList,
+.sessionBack .sessionList {
     .el-menu-vertical-demo {
         max-height: calc(100vh - 170px);
         overflow-y: auto;
@@ -212,7 +274,7 @@ export default {
         }
     }
 }
-.sessionList .el-menu-item {
+.sessionBack .sessionList .el-menu-item {
     height: 60px;
 }
 </style>
