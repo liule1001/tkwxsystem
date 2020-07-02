@@ -91,4 +91,10 @@ export default {
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
+.el-dialog__body{
+  padding: 0;
+}
+.el-dialog--center .el-dialog__body{
+   padding: 0;
+}
 </style>
