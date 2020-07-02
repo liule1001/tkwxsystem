@@ -114,7 +114,7 @@ export default {
   }
 };
 </script>
-<style lang="scss" rel="stylesheet/scss" scoped>
+<style lang="scss" rel="stylesheet/scss">
 .existbox {
   display: flex;
   align-items: flex-start;
