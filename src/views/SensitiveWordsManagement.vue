@@ -1,7 +1,7 @@
 <template>
   <div class="about">
     <h1>敏感词管理</h1>
-    <el-button plain @click="add(e)">新增敏感词</el-button>
+    <el-button plain @click="add()">新增敏感词</el-button>
     <div class="existbox">
       <div class="sensitivetype">已有敏感词</div>
       <div class="editbox">
