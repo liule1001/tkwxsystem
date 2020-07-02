@@ -1,58 +1,115 @@
 <template>
-    <div>
-        <el-col   class="staffList">
+    <div clsss="sessionBackup">
+        <el-col class="staffList">
             <h5>员工列表</h5>
-            <el-menu
-            default-active="2"
-            class="el-menu-vertical-demo"
-            background-color="#ddd"
-            text-color="#333"
-            active-text-color="#333"
-        >
-            <el-submenu index="1">
-                <template slot="title">
-                    <span>敏感词</span>
-                </template>
-                <el-menu-item>
-                    <staff />
-                </el-menu-item>
-                <el-menu-item>
-                    <staff />
-                </el-menu-item>
-                <el-menu-item>
-                    <staff />
-                </el-menu-item>
-            </el-submenu>
+            <div class="staffItems">
+                <el-menu
+                    default-active="2"
+                    class="el-menu-vertical-demo"
+                    background-color="#ddd"
+                    text-color="#333"
+                    active-text-color="#333"
+                >
+                    <el-submenu index="1">
+                        <template slot="title">
+                            <span>敏感词</span>
+                        </template>
+                        <el-menu-item>
+                            <staff />
+                        </el-menu-item>
+                        <el-menu-item>
+                            <staff />
+                        </el-menu-item>
+                        <el-menu-item>
+                            <staff />
+                        </el-menu-item>
+                    </el-submenu>
 
-            <el-submenu index="2">
-                <template slot="title">
-                    <span>客户响应</span>
-                </template>
-                <el-menu-item><staff /></el-menu-item>
-                <el-menu-item><staff /></el-menu-item>
-                <el-menu-item><staff /></el-menu-item>
-                <el-menu-item><staff /></el-menu-item>
-                <el-menu-item><staff /></el-menu-item>
-            </el-submenu>
-        </el-menu>
+                    <el-submenu index="2">
+                        <template slot="title">
+                            <span>客户响应</span>
+                        </template>
+                        <el-menu-item>
+                            <staff />
+                        </el-menu-item>
+                        <el-menu-item>
+                            <staff />
+                        </el-menu-item>
+                        <el-menu-item>
+                            <staff />
+                        </el-menu-item>
+                        <el-menu-item>
+                            <staff />
+                        </el-menu-item>
+                        <el-menu-item>
+                            <staff />
+                        </el-menu-item>
+                        <el-menu-item>
+                            <staff />
+                        </el-menu-item>
+                        <el-menu-item>
+                            <staff />
+                        </el-menu-item>
+                        <el-menu-item>
+                            <staff />
+                        </el-menu-item>
+                        <el-menu-item>
+                            <staff />
+                        </el-menu-item>
+                        <el-menu-item>
+                            <staff />
+                        </el-menu-item>
+                        <el-menu-item>
+                            <staff />
+                        </el-menu-item>
+                        <el-menu-item>
+                            <staff />
+                        </el-menu-item>
+                        <el-menu-item>
+                            <staff />
+                        </el-menu-item>
+                        <el-menu-item>
+                            <staff />
+                        </el-menu-item>
+                        <el-menu-item>
+                            <staff />
+                        </el-menu-item>
+                        <el-menu-item>
+                            <staff />
+                        </el-menu-item>
+                        <el-menu-item>
+                            <staff />
+                        </el-menu-item>
+                        <el-menu-item>
+                            <staff />
+                        </el-menu-item>
+                        <el-menu-item>
+                            <staff />
+                        </el-menu-item>
+                        <el-menu-item>
+                            <staff />
+                        </el-menu-item>
+                    </el-submenu>
+                </el-menu>
+            </div>
         </el-col>
         <el-col class="sessionList">
             <h5>会话列表</h5>
             <el-menu
-            default-active="2"
-            class="el-menu-vertical-demo"
-            background-color="#ddd"
-            text-color="#333"
-            active-text-color="#333"
-        >
-            <el-menu-item>
-                <Session/>
-            </el-menu-item>
+                default-active="2"
+                class="el-menu-vertical-demo"
+                background-color="#ddd"
+                text-color="#333"
+                active-text-color="#333"
+            >
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
 
-            <el-menu-item>
-                 <Session/>
-            </el-menu-item>
-        </el-menu>
+                <el-menu-item>
+                    <Session />
+                </el-menu-item>
+            </el-menu>
         </el-col>
         <el-col>
             <h5>聊天记录</h5>
@@ -68,9 +125,7 @@ import Chat from "@/components/Chat.vue";
 export default {
     name: "hello",
     data() {
-        return {
-           
-        };
+        return {};
     },
     components: {
         Chat,
@@ -78,19 +133,26 @@ export default {
         Session
     },
     mounted() {},
-    methods: {
-        
-    }
+    methods: {}
 };
 </script>
 
 <style lang="scss" rel="stylesheet/scss" >
 @import "../assets/scss/sessionBack.scss";
-.staffList, .sessionList{
+.sessionBackup .staffItems {
+    max-height: calc(100vh - 170px);
+    overflow: hidden;
+    overflow-y: auto;
+}
+.sessionBackup .el-menu-vertical-demo {
+    height: auto;
+}
+.staffList,
+.sessionList {
     .el-submenu__title {
         border-bottom: 1px solid #ccc;
     }
-     .el-menu-item {
+    .el-menu-item {
         padding: 0 15px !important;
         border-bottom: 1px solid #ccc;
         * {
@@ -98,8 +160,7 @@ export default {
         }
     }
 }
-.sessionList .el-menu-item{
+.sessionList .el-menu-item {
     height: 60px;
 }
-
 </style>

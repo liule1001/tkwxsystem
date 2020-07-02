@@ -9,7 +9,7 @@
         </el-radio-group>
     </div>
     <div>
-        <el-col   class="staffList">
+        <el-col class="staffList">
             <h5>员工列表</h5>
             <el-menu
             default-active="2"
@@ -37,6 +37,9 @@
                 <template slot="title">
                     <span>客户响应</span>
                 </template>
+                <el-menu-item><Response /></el-menu-item>
+                <el-menu-item><Response /></el-menu-item>
+                <el-menu-item><Response /></el-menu-item>
                 <el-menu-item><Response /></el-menu-item>
                 <el-menu-item><Response /></el-menu-item>
                 <el-menu-item><Response /></el-menu-item>
@@ -99,6 +102,11 @@ export default {
 @import "../assets/scss/sessionBack.scss";
 .activeResponse .el-col {
     height: calc(100vh - 204px);
+}
+.activeResponse .el-menu-vertical-demo {
+    height: auto;
+    max-height: calc(100vh - 255px);
+    overflow-y: auto;
 }
 .activeResponse .staffList, .sessionList{
     .el-submenu__title {
