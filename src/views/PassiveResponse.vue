@@ -37,7 +37,7 @@
 </template>
 
 
-<style lang="scss" rel="stylesheet/scss">
+<style lang="scss" rel="stylesheet/scss" scoped>
 @import "../assets/scss/sessionBack.scss";
 .staffList, .sessionList{
     .el-submenu__title {

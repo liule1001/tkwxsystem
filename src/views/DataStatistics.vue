@@ -1,13 +1,20 @@
 <template>
   <div class="about">
     <div class="elRow" style="width: 100%">
-      <el-radio-group v-model="radio1">
-        <el-radio-button label="本日" fill="#14b5b0"></el-radio-button>
-        <el-radio-button label="昨日"></el-radio-button>
+       <el-radio-group v-model="radio1" size="small">
+      <el-radio label="本日" border>本日</el-radio>
+      <el-radio label="昨日" border >昨日</el-radio>
+      <el-radio label="本周" border >本周</el-radio>
+      <el-radio label="本月" border >本月</el-radio>
+      <el-radio label="自定义时段" border >自定义时段</el-radio>
+    </el-radio-group>
+      <!-- <el-radio-group v-model="radio1">
+        <el-radio-button label="本日" border></el-radio-button>
+        <el-radio-button label="昨日" border></el-radio-button>
         <el-radio-button label="本周"></el-radio-button>
         <el-radio-button label="本月"></el-radio-button>
         <el-radio-button label="自定义时段"></el-radio-button>
-      </el-radio-group>
+      </el-radio-group> -->
       <div class="elTime">
         <div class="block">
           <el-date-picker v-model="value1" type="date" placeholder="起始日期" size="small" ></el-date-picker>
@@ -21,25 +28,25 @@
       <el-button size="small">导出Excle</el-button>
     </div>
     <el-table :data="tableData" style="width: 100%">
-      <el-table-column prop="name" label="成员姓名" width="80"></el-table-column>
-      <el-table-column prop="num" label="TK号" width="150"></el-table-column>
-      <el-table-column label="通讯录">
-        <el-table-column prop="newadd" label="新增客户数" width="80"></el-table-column>
-        <el-table-column prop="applyadd" label="申请添加客户数" width="110"></el-table-column>
-        <el-table-column prop="totalcustom" label="累计客户数" width="80"></el-table-column>
-        <el-table-column prop="delcustom" label="删黑客户数" width="80"></el-table-column>
+      <el-table-column prop="name" label="成员姓名" width="80" align="center"></el-table-column>
+      <el-table-column prop="num" label="TK号" width="100" align="center"></el-table-column>
+      <el-table-column label="通讯录" align="center">
+        <el-table-column prop="newadd" label="新增客户数" width="100"></el-table-column>
+        <el-table-column prop="applyadd" label="申请添加客户数" width="auto"></el-table-column>
+        <el-table-column prop="totalcustom" label="累计客户数" width="100"></el-table-column>
+        <el-table-column prop="delcustom" label="删黑客户数" width="100"></el-table-column>
       </el-table-column>
-      <el-table-column label="聊天">
+      <el-table-column label="聊天" align="center">
         <el-table-column prop="checktotal" label="聊天总数" width="80"></el-table-column>
-        <el-table-column prop="checktrig" label="主动聊天数" width="80"></el-table-column>
-        <el-table-column prop="msgtotal" label="发送消息数" width="80"></el-table-column>
-        <el-table-column prop="replyrato" label="回复聊天占比" width="80"></el-table-column>
-        <el-table-column prop="replytime" label="首次回复平均时长" width="110"></el-table-column>
+        <el-table-column prop="checktrig" label="主动聊天数" width="100"></el-table-column>
+        <el-table-column prop="msgtotal" label="发送消息数" width="100"></el-table-column>
+        <el-table-column prop="replyrato" label="回复聊天占比" width="auto"></el-table-column>
+        <el-table-column prop="replytime" label="首次回复平均时长" width="auto"></el-table-column>
       </el-table-column>
-      <el-table-column label="客户">
-        <el-table-column prop="cusreplyratio" label="客户回复占比" width="110"></el-table-column>
-        <el-table-column prop="trigcustom" label="主动响应客户数" width="110"></el-table-column>
-        <el-table-column prop="sensitivecus" label="被动响应客户数" width="110"></el-table-column>
+      <el-table-column label="客户" align="center">
+        <el-table-column prop="cusreplyratio" label="客户回复占比" width="auto"></el-table-column>
+        <el-table-column prop="trigcustom" label="主动响应客户数" width="auto"></el-table-column>
+        <el-table-column prop="sensitivecus" label="被动响应客户数" width="auto"></el-table-column>
       </el-table-column>
     </el-table>
   </div>
@@ -82,9 +89,9 @@ export default {
 .el-button:hover {
   color: #14b5b0 !important;
 }
-.el-radio-button {
-  margin-right: 20px;
-}
+// .el-radio-button {
+//   margin-right: 20px;
+// }
 
 .elRow {
   display: flex;
@@ -95,7 +102,7 @@ export default {
   .elTime {
     display: flex;
     align-items: center;
-    margin-right: 20px;
+    margin:0 20px;
     .block-right {
       margin-right: 20px;
       .el-input__prefix{
