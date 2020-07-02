@@ -3,13 +3,13 @@
     <h1>触发敏感词</h1>
     <div>
       <el-table :data="tableData" style="width: 100%" max-height="500">
-        <el-table-column prop="date" label="发送人" width="150"></el-table-column>
-        <el-table-column prop="name" label="发送人身份" width="120"></el-table-column>
-        <el-table-column prop="province" label="发送时间" width="200"></el-table-column>
-        <el-table-column prop="city" label="发送内容" width="300"></el-table-column>
-        <el-table-column prop="address" label="接收人" width="120"></el-table-column>
-        <el-table-column prop="zip" label="接收人身份" width="120"></el-table-column>
-        <el-table-column fixed="right" label="操作" width="200">
+        <el-table-column prop="date" label="发送人"   align="center"></el-table-column>
+        <el-table-column prop="name" label="发送人身份"  align="center"></el-table-column>
+        <el-table-column prop="province" label="发送时间" align="center"></el-table-column>
+        <el-table-column prop="city" label="发送内容"  align="center"></el-table-column>
+        <el-table-column prop="address" label="接收人"  align="center"></el-table-column>
+        <el-table-column prop="zip" label="接收人身份"  align="center"></el-table-column>
+        <el-table-column fixed="right" label="操作"  align="center">
           <template slot-scope="scope">
             <el-button @click="details(scope.row,scope.$index)" type="text" size="small">查看详情</el-button>
           </template>
