@@ -9,9 +9,13 @@
         <el-radio-button label="自定义时段"></el-radio-button>
       </el-radio-group>
       <div class="elTime">
-        <el-button size="small" disabled>起始日期</el-button>
+        <div class="block">
+          <el-date-picker v-model="value1" type="date" placeholder="起始日期" size="small" ></el-date-picker>
+        </div>
         <span class="elTimeSpan">到</span>
-        <el-button size="small" disabled>终止日期</el-button>
+        <div class="block-right">
+          <el-date-picker v-model="value2" type="date" placeholder="终止日期" size="small" ></el-date-picker>
+        </div>
         <el-button size="small">查询</el-button>
       </div>
       <el-button size="small">导出Excle</el-button>
@@ -46,7 +50,9 @@
 export default {
   data() {
     return {
-      radio1: "本日",
+      radio1: "",
+      value1:"",
+      value2:"",
       tableData: [
         {
           name: "一一",
@@ -79,6 +85,7 @@ export default {
 .el-radio-button {
   margin-right: 20px;
 }
+
 .elRow {
   display: flex;
   justify-content: space-evenly;
@@ -86,9 +93,23 @@ export default {
     margin-right: 20px;
   }
   .elTime {
+    display: flex;
+    align-items: center;
     margin-right: 20px;
+    .block-right {
+      margin-right: 20px;
+      .el-input__prefix{
+        display: none;
+      }
+    }
     .elTimeSpan {
       margin: 0 20px;
+    }
+
+    .el-input--small .el-input__inner {
+      width: 90px;
+      height: 40px;
+      line-height: 40px;
     }
   }
 }
