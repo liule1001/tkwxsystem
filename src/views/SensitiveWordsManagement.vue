@@ -1,7 +1,7 @@
 <template>
   <div class="about">
     <h1>敏感词管理</h1>
-    <el-button plain @click="add">新增敏感词</el-button>
+    <el-button plain @click="add()">新增敏感词</el-button>
     <div class="existbox">
       <div class="sensitivetype">已有敏感词</div>
       <div class="editbox">
@@ -60,8 +60,8 @@ export default {
             len = chcode.length;
           }
           let symbolLength = e.length - len;
-          if ((symbolLength + len * 2) <= 16) {
-            console.log(symbolLength + len * 2)
+          if (symbolLength + len * 2 <= 16) {
+            console.log(symbolLength + len * 2);
             return true;
           } else {
             return false;
@@ -93,11 +93,17 @@ export default {
         });
     },
     cancle(index) {
-      this.$message({
-        type: "info",
-        message: "删除成功"
-      });
-      this.dataSource[index].isShowBtn = false;
+      this.$http
+        .post({url:'/ceping-0.0.1-SNAPSHOT/ceping/save'}
+        )
+        .then((response)=> {
+          console.log("response", response);
+          this.$message({
+            type: "info",
+            message: "删除成功"
+          });
+          this.dataSource[index].isShowBtn = false;
+        });
     },
     edit(index) {
       this.popTitle = "修改敏感词";
@@ -106,6 +112,11 @@ export default {
     add() {
       this.popTitle = "新增敏感词";
       this.open();
+       this.$http
+        .get({url:'/ceping-0.0.1-SNAPSHOT/ceping/selectInfoByPage?pageNum=1&pageSize=8'})
+        .then((response)=> {
+          console.log("response", response);
+        });
     },
     isShow(index) {
       console.log(index);

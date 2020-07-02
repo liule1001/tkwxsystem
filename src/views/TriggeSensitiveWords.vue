@@ -2,7 +2,7 @@
   <div class="about">
     <h1>触发敏感词</h1>
     <div>
-      <el-table :data="tableData" style="width: 100%" max-height="500">
+      <el-table :data="tableData" style="width: 100%" max-height="500" border>
         <el-table-column prop="date" label="发送人" align="center"></el-table-column>
         <el-table-column prop="name" label="发送人身份" align="center"></el-table-column>
         <el-table-column prop="province" label="发送时间" align="center"></el-table-column>
@@ -91,4 +91,10 @@ export default {
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
+.el-dialog__body{
+  padding: 0;
+}
+.el-dialog--center .el-dialog__body{
+   padding: 0;
+}
 </style>

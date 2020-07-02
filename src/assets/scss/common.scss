@@ -36,3 +36,6 @@ span {
 .fr {
     float: right;
 }
+body .el-table th.gutter{
+    display: table-cell!important;
+}
