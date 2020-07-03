@@ -93,10 +93,8 @@ export default {
         });
     },
     cancle(index) {
-      this.$http
-        .post({url:'/ceping-0.0.1-SNAPSHOT/ceping/save'}
-        )
-        .then((response)=> {
+      // 删除接口调用
+      this.$http.post({url:'/ceping-0.0.1-SNAPSHOT/ceping/save'}).then((response)=> {
           console.log("response", response);
           this.$message({
             type: "info",

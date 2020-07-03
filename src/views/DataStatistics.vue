@@ -14,7 +14,7 @@
                 <el-date-picker v-model="endTime" type="date" placeholder="终止日期" size="small"></el-date-picker>
             </div>
            
-            <el-button size="small">查询</el-button>
+            <el-button size="small" @click="select()">查询</el-button>
             <el-button size="small">导出Excle</el-button>
         </div>
         <el-table :data="tableData" style="width: 100%">
@@ -71,7 +71,21 @@ export default {
         };
     },
     mounted() {},
-    methods: {}
+    methods: {
+      select(){
+        if(this.radio1 === "自定义时段"){
+          // 自定义时段发送起始至终止日期
+          this.$http.post({url:'/ceping-0.0.1-SNAPSHOT/ceping/save'}).then((response)=> {
+          console.log("response", response);
+          });
+        }else{
+          // 否则发送当日，本月等
+          this.$http.post({url:'/ceping-0.0.1-SNAPSHOT/ceping/save'}).then((response)=> {
+          console.log("response", response);
+          });
+        }
+      }
+    }
 };
 </script>
 <style lang="scss" rel="stylesheet/scss" scoped>
