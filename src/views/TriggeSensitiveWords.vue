@@ -18,7 +18,7 @@
     </div>
     <div v-if="modalShow">
       <el-dialog title="聊天内容" :visible.sync="modalShow" center>
-        <Chat />
+        <Chat :content="chatInformation" />
       </el-dialog>
     </div>
   </div>
@@ -72,6 +72,30 @@ export default {
         type: [],
         resource: "1",
         desc: "1"
+      },
+      chatInformation: {
+        Sender: "一一",
+        receiver: "二二",
+        chatcontent: [
+          {
+            role: "Sender",
+            timeOne: "2020-07-03",
+            timeTwo: "12:13:14",
+            content: "巴拉巴拉聊天聊天聊天聊天"
+          },
+          {
+            role: "receiver",
+            timeOne: "2020-01-01",
+            timeTwo: "01:02:03",
+            content: "哔哔叭叭哈哈哈哈哈哈哈哈哈哈"
+          },
+          {
+            role: "receiver",
+            timeOne: "2020-01-01",
+            timeTwo: "01:02:03",
+            content: "第三段聊天"
+          }
+        ]
       }
     };
   },
@@ -91,10 +115,10 @@ export default {
 </script>
 
 <style lang="scss" rel="stylesheet/scss">
-.el-dialog__body{
+.el-dialog__body {
   padding: 0;
 }
-.el-dialog--center .el-dialog__body{
-   padding: 0;
+.el-dialog--center .el-dialog__body {
+  padding: 0;
 }
 </style>
