@@ -1,10 +1,5 @@
 <template>
-<<<<<<< HEAD
   <div class="passiveResponse">
-=======
-  <div class="activeResponse">
-      <h3>被动响应客户</h3>
->>>>>>> 6e58c8903a911628f541be30f5b70d1cfb990179
     <div style="margin: 5px 0 20px 0;">
       <el-radio-group v-model="radio1" size="small">
         <el-radio label="1" border>当日</el-radio>
@@ -177,28 +172,16 @@ export default {
 
 <style lang="scss" rel="stylesheet/scss" >
 @import "../assets/scss/sessionBack.scss";
-<<<<<<< HEAD
 .passiveResponse .el-col {
   height: calc(100vh - 204px);
 }
 .passiveResponse .el-menu-vertical-demo {
-=======
-.activeResponse .el-col {
-  height: calc(100vh - 204px);
-}
-.activeResponse .el-menu-vertical-demo {
->>>>>>> 6e58c8903a911628f541be30f5b70d1cfb990179
   height: auto;
   max-height: calc(100vh - 255px);
   overflow-y: auto;
 }
-<<<<<<< HEAD
 .passiveResponse .staffList,
 .passiveResponse .sessionList {
-=======
-.staffList,
-.sessionList {
->>>>>>> 6e58c8903a911628f541be30f5b70d1cfb990179
   .el-submenu__title {
     border-bottom: 1px solid #ccc;
   }
@@ -211,11 +194,7 @@ export default {
     }
   }
 }
-<<<<<<< HEAD
 .passiveResponse .sessionList .el-menu-item {
-=======
-.activeResponse .sessionList .el-menu-item {
->>>>>>> 6e58c8903a911628f541be30f5b70d1cfb990179
   height: 60px;
 }
 </style>
