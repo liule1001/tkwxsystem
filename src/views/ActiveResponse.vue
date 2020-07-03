@@ -144,7 +144,7 @@
       </el-col>
       <el-col>
         <h5>聊天记录</h5>
-        <Chat />
+        <Chat :content="chatInformation"/>
       </el-col>
     </div>
   </div>
@@ -158,7 +158,31 @@ export default {
   name: "hello",
   data() {
     return {
-      radio1: "1"
+      radio1: "1",
+            chatInformation: {
+        Sender: "一一",
+        receiver: "二二",
+        chatcontent: [
+          {
+            role: "Sender",
+            timeOne: "2020-07-03",
+            timeTwo: "12:13:14",
+            content: "积极响应1"
+          },
+          {
+            role: "receiver",
+            timeOne: "2020-01-01",
+            timeTwo: "01:02:03",
+            content: "积极响应2"
+          },
+          {
+            role: "receiver",
+            timeOne: "2020-01-01",
+            timeTwo: "01:02:03",
+            content: "积极响应3"
+          }
+        ]
+      }
     };
   },
   components: {
