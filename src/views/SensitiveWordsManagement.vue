@@ -28,22 +28,7 @@ export default {
       dataSource: [
         { data: "123457890-0987654", isShowBtn: false },
         { data: "1", isShowBtn: false },
-        { data: "2", isShowBtn: false },
-        { data: "1", isShowBtn: false },
-        { data: "2", isShowBtn: false },
-        { data: "1", isShowBtn: false },
-        { data: "2", isShowBtn: false },
-        { data: "1", isShowBtn: false },
-        { data: "2", isShowBtn: false },
-        { data: "1", isShowBtn: false },
-        { data: "2", isShowBtn: false },
-        { data: "1", isShowBtn: false },
-        { data: "2", isShowBtn: false },
-        { data: "1", isShowBtn: false },
-        { data: "2", isShowBtn: false },
-        { data: "1", isShowBtn: false },
-        { data: "2", isShowBtn: false },
-        { data: "3", isShowBtn: false }
+        { data: "2", isShowBtn: false }
       ]
     };
   },
@@ -53,35 +38,35 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         inputValidator: e => {
-          const reg = /[\u4E00-\u9FA5]/g;
-          let len = 0;
-          let chcode = e.match(reg);
-          if (chcode) {
-            len = chcode.length;
-          }
-          let symbolLength = e.length - len;
-          if (symbolLength + len * 2 <= 16) {
-            console.log(symbolLength + len * 2);
-            return true;
-          } else {
-            return false;
-          }
+          // if(e){
+            this.checkLength(e);
+          // }
+          
         },
         inputErrorMessage: "长度最多16个字符(1个汉字=2个字符)",
         inputPlaceholder: "填写敏感词",
         showClose: false
       })
         .then(() => {
-          // 接口请求
-
-          this.$message({
-            type: "success",
-            message: this.popTitle + "成功"
-          });
-          if (index === 0 || index) {
-            this.dataSource[index].isShowBtn = false;
-          }
+          //  console.log("e",e['value'])
+          // if (e.value!==null) {
+            // 接口请
+            this.$message({
+              type: "success",
+              message: this.popTitle + "成功"
+            });
+            if (index === 0 || index) {
+              this.dataSource[index].isShowBtn = false;
+            }
+          // }
+          //  else {
+          //   this.$message({
+          //     type: "success",
+          //     message: "取消填写"
+          //   });
+          // }
         })
+
         .catch(() => {
           this.$message({
             type: "info",
@@ -94,9 +79,8 @@ export default {
     },
     cancle(index) {
       this.$http
-        .post({url:'/ceping-0.0.1-SNAPSHOT/ceping/save'}
-        )
-        .then((response)=> {
+        .post({ url: "/ceping-0.0.1-SNAPSHOT/ceping/save" })
+        .then(response => {
           console.log("response", response);
           this.$message({
             type: "info",
@@ -112,15 +96,33 @@ export default {
     add() {
       this.popTitle = "新增敏感词";
       this.open();
-       this.$http
-        .get({url:'/ceping-0.0.1-SNAPSHOT/ceping/selectInfoByPage?pageNum=1&pageSize=8'})
-        .then((response)=> {
+      this.$http
+        .get({
+          url:
+            "/ceping-0.0.1-SNAPSHOT/ceping/selectInfoByPage?pageNum=1&pageSize=8"
+        })
+        .then(response => {
           console.log("response", response);
         });
     },
     isShow(index) {
       console.log(index);
       this.dataSource[index].isShowBtn = !this.dataSource[index].isShowBtn;
+    },
+    checkLength(e) {
+      const reg = /[\u4E00-\u9FA5]/g;
+      let len = 0;
+      let chcode = e.match(reg);
+      if (chcode) {
+        len = chcode.length;
+      }
+      let symbolLength = e.length - len;
+      if (symbolLength + len * 2 <= 16) {
+        console.log(symbolLength + len * 2);
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 };
