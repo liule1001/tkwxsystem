@@ -81,7 +81,7 @@ export default {
             role: "Sender",
             timeOne: "2020-07-03",
             timeTwo: "12:13:14",
-            content: "巴拉巴拉聊天聊天聊天聊天"
+            content: "巴拉巴拉<span style='color:red'>聊天</span>聊天聊天聊天"
           },
           {
             role: "receiver",

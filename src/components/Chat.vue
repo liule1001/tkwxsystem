@@ -10,7 +10,8 @@
           <div class="sessionBox">
             <div
               :class="item.role==='receiver' ? 'customerSession session':'businessmanSession session'"
-            >{{item.content}}</div>
+              v-html="item.content"
+            ></div>
           </div>
           <div :class="item.role==='receiver' ? 'customerTime time':'businessmanTime time'">
             <span>{{item.timeOne}}</span>
@@ -29,7 +30,13 @@ export default {
   },
   props: ["content"],
   methods: {},
-  mounted() {}
+  mounted() {
+    this.$http
+      .post({ url: "/ceping-0.0.1-SNAPSHOT/ceping/save" })
+      .then(response => {
+        console.log("response", response);
+      });
+  }
 };
 </script>
 
