@@ -30,13 +30,7 @@ export default {
   },
   props: ["content"],
   methods: {},
-  mounted() {
-    this.$http
-      .post({ url: "/ceping-0.0.1-SNAPSHOT/ceping/save" })
-      .then(response => {
-        console.log("response", response);
-      });
-  }
+  mounted() {}
 };
 </script>
 
