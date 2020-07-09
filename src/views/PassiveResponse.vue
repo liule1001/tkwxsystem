@@ -159,25 +159,22 @@ export default {
     return {
       radio1: "1",
       chatInformation: {
-        Sender: "一一",
-        receiver: "二二",
+        staff: "一一",
+        custom: "二二",
         chatcontent: [
           {
-            role: "Sender",
-            timeOne: "2020-07-03",
-            timeTwo: "12:13:14",
+            role: "staff",
+            msgtime: "2020-07-03 12:13:14",
             content: "被动响应1"
           },
           {
-            role: "receiver",
-            timeOne: "2020-01-01",
-            timeTwo: "01:02:03",
+            role: "staff",
+            msgtime: "2020-01-01 01:02:03",
             content: "被动响应2"
           },
           {
-            role: "receiver",
-            timeOne: "2020-01-01",
-            timeTwo: "01:02:03",
+            role: "custom",
+            msgtime: "2020-01-01 01:02:03",
             content: "被动响应3"
           }
         ]

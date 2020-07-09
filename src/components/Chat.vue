@@ -1,21 +1,20 @@
 <template>
   <div class="chatBox">
     <div class="nameBox">
-      <div class="customer">{{content.receiver}}</div>
-      <div class="businessman">{{content.Sender}}</div>
+      <div class="customer">{{content.custom}}</div>
+      <div class="businessman">{{content.staff}}</div>
     </div>
     <div class="content">
       <div class="chatContent">
         <div class="item" v-for="(item,index) in content.chatcontent" v-bind:key="index">
           <div class="sessionBox">
             <div
-              :class="item.role==='receiver' ? 'customerSession session':'businessmanSession session'"
+              :class="item.role==='custom' ? 'customerSession session':'businessmanSession session'"
               v-html="item.content"
             ></div>
           </div>
-          <div :class="item.role==='receiver' ? 'customerTime time':'businessmanTime time'">
-            <span>{{item.timeOne}}</span>
-            <span>{{item.timeTwo}}</span>
+          <div :class="item.role==='custom' ? 'customerTime time':'businessmanTime time'">
+            <span>{{item.msgtime}}</span>
           </div>
         </div>
       </div>

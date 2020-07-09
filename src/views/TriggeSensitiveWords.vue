@@ -12,7 +12,7 @@
         </el-table-column>
         <el-table-column prop="content" label="发送内容" align="center">
           <template slot-scope="scope">
-            <div v-html="scope.row.content"></div>
+            <div v-html="scope.row.content" class="tableLimit"></div>
           </template>
         </el-table-column>
         <el-table-column prop="tolist" label="接收人" align="center"></el-table-column>
@@ -23,6 +23,14 @@
           </template>
         </el-table-column>
       </el-table>
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="count"
+        :page-size="10"
+        @current-change="handleCurrentChange"
+        class="pagination"
+      ></el-pagination>
     </div>
     <div v-if="modalShow">
       <el-dialog title="聊天内容" :visible.sync="modalShow" center>
@@ -40,73 +48,140 @@ export default {
     return {
       tableData: [],
       modalShow: false,
-      form: {
-        name: "1",
-        region: "1",
-        date1: "1",
-        date2: "1",
-        delivery: false,
-        type: [],
-        resource: "1",
-        desc: "1"
-      },
-      chatInformation: {
-        Sender: "一一",
-        receiver: "二二",
-        chatcontent: [
-          {
-            role: "Sender",
-            timeOne: "2020-07-03",
-            timeTwo: "12:13:14",
-            content: "巴拉巴拉<span style='color:red'>聊天</span>聊天聊天聊天"
-          },
-          {
-            role: "receiver",
-            timeOne: "2020-01-01",
-            timeTwo: "01:02:03",
-            content: "哔哔叭叭哈哈哈哈哈哈哈哈哈哈"
-          },
-          {
-            role: "receiver",
-            timeOne: "2020-01-01",
-            timeTwo: "01:02:03",
-            content: "第三段聊天"
-          }
-        ]
-      }
+      chatInformation: {},
+      count: 100
     };
   },
   created() {
-    let table=[
+    let res = [
       {
-          formm: "一一",
-          formmIdentity: "客户",
-          msgtime:'2020-07-01 12：12：12',
-          content: '触发了<span style="color:red">12345</span>敏感词',
-          tolist: "二二",
-          tolistIdentity: "员工"
-        },
-        {
-          formm: "三三",
-          formmIdentity: "客户",
-          msgtime:'2020-07-01 12：12：13',
-          content:  '触发了<span style="color:red">红色敏感字</span>是的',
-          tolist: "四四",
-          tolistIdentity: "员工"
-        }
-    ]
-    let tabledata=table.map((item)=>{
-      return {
-        formm:item.formm,
-        formmIdentity:item.formmIdentity,
-        msgtime:item.msgtime.replace(/\s+/g,'<br/>'),
-        content:item.content,
-        tolist: item.tolist,
-        tolistIdentity: item.tolistIdentity
+        msgtype: "text",
+        msgid: "12271759686357257076_1593752074",
+        action: "send",
+        fromm: "WuXiaoWen",
+        tolist: "[wm4fJCBgAA9Ryoo8mEFptgooXcZFQZBQ]",
+        roomid: "",
+        msgtime: "2020-07-03 12:54:34",
+        content: "触发了<span style='color:red'>12345</span>敏感词"
+      },
+      {
+        msgtype: "text",
+        msgid: "9867567917735866980_1593751929",
+        action: "send",
+        fromm: "ShiYanLing",
+        tolist: "[wm4fJCBgAAmMqeyeGHUieC7bZULKwyAA]",
+        roomid: "",
+        msgtime: "2020-07-03 12:52:10",
+        content:
+          "湖南省携手“<span style='color:red'>泰康养老</span>”为长沙市社保居民定制专属“星惠保惠民保障方案”。切实解决“看病难、看病贵”等问题。"
+      },
+      {
+        msgtype: "text",
+        msgid: "12271759686357257076_1593752074",
+        action: "send",
+        fromm: "WuXiaoWen",
+        tolist: "[wm4fJCBgAA9Ryoo8mEFptgooXcZFQZBQ]",
+        roomid: "",
+        msgtime: "2020-07-03 12:54:34",
+        content: "触发了<span style='color:red'>12345</span>敏感词"
+      },
+      {
+        msgtype: "text",
+        msgid: "9867567917735866980_1593751929",
+        action: "send",
+        fromm: "ShiYanLing",
+        tolist: "[wm4fJCBgAAmMqeyeGHUieC7bZULKwyAA]",
+        roomid: "",
+        msgtime: "2020-07-03 12:52:10",
+        content:
+          "湖南省携手“<span style='color:red'>泰康养老</span>”为长沙市社保居民定制专属“星惠保惠民保障方案”。切实解决“看病难、看病贵”等问题。"
+      },
+      {
+        msgtype: "text",
+        msgid: "12271759686357257076_1593752074",
+        action: "send",
+        fromm: "WuXiaoWen",
+        tolist: "[wm4fJCBgAA9Ryoo8mEFptgooXcZFQZBQ]",
+        roomid: "",
+        msgtime: "2020-07-03 12:54:34",
+        content: "触发了<span style='color:red'>12345</span>敏感词"
+      },
+      {
+        msgtype: "text",
+        msgid: "9867567917735866980_1593751929",
+        action: "send",
+        fromm: "ShiYanLing",
+        tolist: "[wm4fJCBgAAmMqeyeGHUieC7bZULKwyAA]",
+        roomid: "",
+        msgtime: "2020-07-03 12:52:10",
+        content:
+          "湖南省携手“<span style='color:red'>泰康养老</span>”为长沙市社保居民定制专属“星惠保惠民保障方案”。切实解决“看病难、看病贵”等问题。"
+      },
+      {
+        msgtype: "text",
+        msgid: "12271759686357257076_1593752074",
+        action: "send",
+        fromm: "WuXiaoWen",
+        tolist: "[wm4fJCBgAA9Ryoo8mEFptgooXcZFQZBQ]",
+        roomid: "",
+        msgtime: "2020-07-03 12:54:34",
+        content: "触发了<span style='color:red'>12345</span>敏感词"
+      },
+      {
+        msgtype: "text",
+        msgid: "9867567917735866980_1593751929",
+        action: "send",
+        fromm: "ShiYanLing",
+        tolist: "[wm4fJCBgAAmMqeyeGHUieC7bZULKwyAA]",
+        roomid: "",
+        msgtime: "2020-07-03 12:52:10",
+        content:
+          "湖南省携手“<span style='color:red'>泰康养老</span>”为长沙市社保居民定制专属“星惠保惠民保障方案”。切实解决“看病难、看病贵”等问题。"
+      },
+      {
+        msgtype: "text",
+        msgid: "12271759686357257076_1593752074",
+        action: "send",
+        fromm: "WuXiaoWen",
+        tolist: "[wm4fJCBgAA9Ryoo8mEFptgooXcZFQZBQ]",
+        roomid: "",
+        msgtime: "2020-07-03 12:54:34",
+        content: "触发了<span style='color:red'>12345</span>敏感词"
+      },
+      {
+        msgtype: "text",
+        msgid: "9867567917735866980_1593751929",
+        action: "send",
+        fromm: "ShiYanLing",
+        tolist: "[wm4fJCBgAAmMqeyeGHUieC7bZULKwyAA]",
+        roomid: "",
+        msgtime: "2020-07-03 12:52:10",
+        content:
+          "湖南省携手“<span style='color:red'>泰康养老</span>”为长沙市社保居民定制专属“星惠保惠民保障方案”。切实解决“看病难、看病贵”等问题。"
       }
-      
-    })
-    this.tableData=tabledata
+    ];
+    // 初始化请求
+    // let param = {
+    //   page: 1,
+    //   limit: 10,
+    //   msgtype: "text"
+    // };
+    // this.$http
+    // .post({ url: "/ceping-0.0.1-SNAPSHOT/ceping/save",arg: param})
+    //   .then(response => {
+    //     console.log("response", response);
+    //   });
+    let table = res.map(item => {
+      return {
+        formm: item.fromm,
+        formmIdentity: item.fromm.match("wm4f") ? "客户" : "员工",
+        msgtime: item.msgtime.replace(/\s+/g, "<br/>"),
+        content: item.content,
+        tolist: item.tolist,
+        tolistIdentity: item.tolist.match("wm4f") ? "客户" : "员工"
+      };
+    });
+    this.tableData = table;
   },
   methods: {
     // deleteRow(index, rows) {
@@ -114,9 +189,84 @@ export default {
     //   this.modalShow = !this.modalShow
     //   alert(this.modalShow)
     // }
-    details(index, rows) {
-      console.log(index, rows);
+    details(index) {
+      console.log(index);
+      let staff = index.formmIdentity === "员工" ? index.formm : index.tolist; //通过判断是不是客户确定是哪个位置
+      let custom = index.formmIdentity === "员工" ? index.tolist : index.formm;
+      // 请求数据，回调执行一下操作
+      // let param = {
+      //   page: 1,
+      //   limit: 10,
+      //   msgtype: "text",
+      //   tolist:index.tolist,
+      //   formm:index.formm,
+      //   time_between:item.msgtime.replace('<br/>', " ")
+      // };
+      // this.$http
+      // .post({ url: "/ceping-0.0.1-SNAPSHOT/ceping/save",arg: param})
+      //   .then(response => {
+      //     console.log("response", response);
+      //   });
+      let res = [
+        {
+          msgtype: "text",
+          msgid: "6090739809806389162_1593580896",
+          action: "send",
+          fromm: "[wm4fJCBgAA9Ryoo8mEFptgooXcZFQZBQ]",
+          tolist: "WuXiaoWen",
+          roomid: "",
+          msgtime: "2020-07-01 13:21:37",
+          content: "聊天<span style='color:red'>一</span>"
+        },
+        {
+          msgtype: "text",
+          msgid: "18359870725314323191_1593580901",
+          action: "send",
+          fromm: "WuXiaoWen",
+          tolist: "[wm4fJCBgAA9Ryoo8mEFptgooXcZFQZBQ]",
+          roomid: "",
+          msgtime: "2020-07-01 13:21:41",
+          content: "我这信号好像不太好"
+        },
+        {
+          msgtype: "text",
+          msgid: "13844107868684910760_1593580916",
+          action: "send",
+          fromm: "[wm4fJCBgAA9Ryoo8mEFptgooXcZFQZBQ]",
+          tolist: "WuXiaoWen",
+          roomid: "",
+          msgtime: "2020-07-01 13:21:56",
+          content: "马上"
+        }
+      ];
+      let chatcontent = res.map(item => {
+        return {
+          role: item.fromm === staff ? "staff" : "custom",
+          msgtime: item.msgtime,
+          content: item.content
+        };
+      });
+      let chatInformation = {
+        staff: staff, //通过判断是不是客户确定是哪个位置
+        custom: custom,
+        chatcontent: chatcontent
+      };
+      this.chatInformation = chatInformation;
       this.modalShow = !this.modalShow;
+    },
+    handleCurrentChange(e) {
+      console.log("第几页", e);
+      // 再次请求
+      // let param = {
+      //   page: e,
+      //   limit: 10,
+      //   msgtype: "text"
+      // };
+      // this.$http
+      // .post({ url: "/ceping-0.0.1-SNAPSHOT/ceping/save",arg: param})
+      //   .then(response => {
+      //     console.log("response", response);
+      //   });
     }
   }
 };
@@ -128,5 +278,16 @@ export default {
 }
 .el-dialog--center .el-dialog__body {
   padding: 0;
+}
+.tableLimit {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /*可以显示的行数，超出部分用...表示 */
+  -webkit-box-orient: vertical;
+}
+.pagination {
+  float: right;
+  margin-top: 10px;
 }
 </style>
