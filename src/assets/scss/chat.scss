@@ -1,7 +1,8 @@
 .chatBox {
     background: #dfdfdf;
-    max-height: calc(70vh);
-    min-height: calc(50vh);
+    height: 350px;
+    // max-height: calc(70vh);
+    // min-height: calc(50vh);
     .nameBox {
         height: 50px;
         border-bottom: 1px solid #999;
@@ -26,10 +27,11 @@
         }
     }
     .content {
-        // height: auto;
+        // height: auto;?
         padding: 10px 0px;
-        max-height: calc(70vh - 50px);
-        min-height: calc(50vh - 50px);
+        height: 300px;
+        // max-height: calc(70vh - 50px);
+        // min-height: calc(50vh - 50px);
         overflow-y: auto;
         .chatContent {
             height: auto;
@@ -74,9 +76,7 @@
                     text-align: right;
                     margin-right: 20px;
                 }
-    
             }
         }
     }
-    
 }

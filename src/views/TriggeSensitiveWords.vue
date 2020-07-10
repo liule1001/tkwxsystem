@@ -2,7 +2,8 @@
   <div class="about">
     <h1>触发敏感词</h1>
     <div>
-      <el-table :data="tableData" style="width: 100%" max-height="500" border>
+      <!-- max-height="500" -->
+      <el-table :data="tableData" style="width: 100%" height="380px" border>
         <el-table-column prop="formm" label="发送人" align="center"></el-table-column>
         <el-table-column prop="formmIdentity" label="发送人身份" align="center"></el-table-column>
         <el-table-column prop="msgtime" label="发送时间" align="center">
@@ -34,7 +35,8 @@
     </div>
     <div v-if="modalShow">
       <el-dialog title="聊天内容" :visible.sync="modalShow" center>
-        <Chat :content="chatInformation" />
+        <!-- flag 为区别滑动的展示不同设置变量 -->
+        <Chat :content="chatInformation" :flag="false" />
       </el-dialog>
     </div>
   </div>
@@ -237,6 +239,76 @@ export default {
           roomid: "",
           msgtime: "2020-07-01 13:21:56",
           content: "马上"
+        },
+        {
+          msgtype: "text",
+          msgid: "6090739809806389162_1593580896",
+          action: "send",
+          fromm: "[wm4fJCBgAA9Ryoo8mEFptgooXcZFQZBQ]",
+          tolist: "WuXiaoWen",
+          roomid: "",
+          msgtime: "2020-07-01 13:21:37",
+          content: "聊天<span style='color:red'>一</span>"
+        },
+        {
+          msgtype: "text",
+          msgid: "18359870725314323191_1593580901",
+          action: "send",
+          fromm: "WuXiaoWen",
+          tolist: "[wm4fJCBgAA9Ryoo8mEFptgooXcZFQZBQ]",
+          roomid: "",
+          msgtime: "2020-07-01 13:21:41",
+          content: "我这信号好像不太好"
+        },
+        {
+          msgtype: "text",
+          msgid: "13844107868684910760_1593580916",
+          action: "send",
+          fromm: "[wm4fJCBgAA9Ryoo8mEFptgooXcZFQZBQ]",
+          tolist: "WuXiaoWen",
+          roomid: "",
+          msgtime: "2020-07-01 13:21:56",
+          content: "马上"
+        },
+        {
+          msgtype: "text",
+          msgid: "6090739809806389162_1593580896",
+          action: "send",
+          fromm: "[wm4fJCBgAA9Ryoo8mEFptgooXcZFQZBQ]",
+          tolist: "WuXiaoWen",
+          roomid: "",
+          msgtime: "2020-07-01 13:21:37",
+          content: "聊天<span style='color:red'>一</span>"
+        },
+        {
+          msgtype: "text",
+          msgid: "18359870725314323191_1593580901",
+          action: "send",
+          fromm: "WuXiaoWen",
+          tolist: "[wm4fJCBgAA9Ryoo8mEFptgooXcZFQZBQ]",
+          roomid: "",
+          msgtime: "2020-07-01 13:21:41",
+          content: "我这信号好像不太好"
+        },
+        {
+          msgtype: "text",
+          msgid: "13844107868684910760_1593580916",
+          action: "send",
+          fromm: "[wm4fJCBgAA9Ryoo8mEFptgooXcZFQZBQ]",
+          tolist: "WuXiaoWen",
+          roomid: "",
+          msgtime: "2020-07-01 13:21:56",
+          content: "马上"
+        },
+        {
+          msgtype: "text",
+          msgid: "6090739809806389162_1593580896",
+          action: "send",
+          fromm: "[wm4fJCBgAA9Ryoo8mEFptgooXcZFQZBQ]",
+          tolist: "WuXiaoWen",
+          roomid: "",
+          msgtime: "2020-07-01 13:21:37",
+          content: "聊天<span style='color:red'>一</span>"
         }
       ];
       let chatcontent = res.map(item => {

@@ -230,7 +230,8 @@
     </el-col>
     <el-col>
       <h5>聊天记录</h5>
-      <Chat :content="chatInformation" />
+      <!-- flag 为区别滑动的展示不同设置变量 -->
+      <Chat :content="chatInformation" :flag="true" />
     </el-col>
   </div>
 </template>
@@ -261,6 +262,41 @@ export default {
             role: "custom",
             msgtime: "2020-01-01 01:02:03",
             content: "聊天备份13"
+          },
+          {
+            role: "staff",
+            msgtime: "2020-01-01 01:02:03",
+            content: "聊天备份12"
+          },
+          {
+            role: "custom",
+            msgtime: "2020-01-01 01:02:03",
+            content: "聊天备份13"
+          },
+          {
+            role: "staff",
+            msgtime: "2020-01-01 01:02:03",
+            content: "聊天备份12"
+          },
+          {
+            role: "custom",
+            msgtime: "2020-01-01 01:02:03",
+            content: "聊天备份13"
+          },
+          {
+            role: "staff",
+            msgtime: "2020-01-01 01:02:03",
+            content: "聊天备份12"
+          },
+          {
+            role: "custom",
+            msgtime: "2020-01-01 01:02:03",
+            content: "聊天备份13"
+          },
+          {
+            role: "staff",
+            msgtime: "2020-01-01 01:02:03",
+            content: "聊天备份12"
           }
         ]
       }
