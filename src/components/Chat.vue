@@ -1,8 +1,8 @@
 <template>
   <div class="chatBox">
     <div class="nameBox">
-      <div class="customer">{{content.custom}}</div>
-      <div class="businessman">{{content.staff}}</div>
+      <div class="customer">{{content.customName}}</div>
+      <div class="businessman">{{content.staffName}}</div>
     </div>
     <div class="content">
       <div class="chatContent">
