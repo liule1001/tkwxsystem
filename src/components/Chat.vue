@@ -38,7 +38,7 @@ export default {
       //获取this.content.chatcontent的总条数
       let len = this.content.chatcontent.length;
       if (this.flag) {
-        //只上滑加载
+        // 只上滑加载;
         if (tar.scrollTop === 0) {
           //滚动到顶部时加载
           console.log("up Reload");
