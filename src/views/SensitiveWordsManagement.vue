@@ -1,6 +1,5 @@
 <template>
   <div class="about">
-    <h1>敏感词管理</h1>
     <el-button plain @click="add()">新增敏感词</el-button>
     <div class="existbox">
       <div class="sensitivetype">已有敏感词</div>
@@ -95,11 +94,7 @@ export default {
     add() {
       this.popTitle = "新增敏感词";
       this.open();
-      this.$http
-        .get({
-          url:
-            "/ceping-0.0.1-SNAPSHOT/ceping/selectInfoByPage?pageNum=1&pageSize=8"
-        })
+      this.$http("/text/addSensitiveWord", {wordname:"123"}, "post")
         .then(response => {
           console.log("response", response);
         });

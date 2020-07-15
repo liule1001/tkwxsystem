@@ -1,16 +1,20 @@
 module.exports = {
+    runtimeCompiler: true,
+    publicPath: '/', // 设置打包文件相对路径
     devServer: {
-        // host:"localhost",//要设置当前访问的ip 否则失效
-        // open: true, //浏览器自动打开页面
-        proxy: {
-            '/api': {
-            target: 'http://182.92.8.37:8080',
-            ws: true,
-            changeOrigin: true,
-            pathRewrite:{
-                '^/api':'http://182.92.8.37:8080'
-            }
+      // open: process.platform === 'darwin',
+      // host: 'localhost',
+      port: 8071,
+      // open: true, //配置自动启动浏览器 
+      proxy: {
+        '/api': {
+          target: 'http://139.9.138.74:8080/', //对应自己的接口
+          changeOrigin: true,
+          ws: true,
+          pathRewrite: {
+            '^/api': ''
+          }
         }
       }
-    }
+     }, 
   }

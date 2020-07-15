@@ -1,6 +1,5 @@
 <template>
   <div class="activeResponse">
-    <h3>主动响应客户</h3>
     <div style="margin: 5px 0 20px 0;">
       <el-radio-group v-model="radio1" size="small">
         <el-radio label="1" border>当日</el-radio>

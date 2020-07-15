@@ -1,6 +1,5 @@
 <template>
   <div class="about">
-    <h1>触发敏感词</h1>
     <div>
       <!-- max-height="500" -->
       <el-table :data="tableData" style="width: 100%" height="380px" border>
