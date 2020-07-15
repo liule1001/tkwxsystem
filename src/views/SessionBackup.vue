@@ -40,14 +40,14 @@
         <el-menu-item
           v-for="(item,k) in getData.checkMain[ind].main"
           :key="k"
-          @click="sessCheck(k)"
+          @click="sessCheck()"
         >
           <Session :main="item" />
         </el-menu-item>
       </el-menu>
     </el-col>
     <el-col>
-      <h5>聊天记录{{ind}}{{uid}}</h5>
+      <h5>聊天记录</h5>
 
       <!-- flag 为区别滑动的展示不同设置变量 -->
       <Chat :content="getData.chatInformation[0]" :flag="true" />
@@ -63,9 +63,9 @@ export default {
   name: "hello",
   data() {
     return {
-      ind: 0,
-      uid: 0,
+      ind: 0, //初始化选中员工下标
       getData: {
+        // 员工列表
         first: [
           {
             title: "BGC项目",
@@ -83,6 +83,7 @@ export default {
             ]
           }
         ],
+        //会话列表
         checkMain: [
           {
             main: [
@@ -105,39 +106,34 @@ export default {
             ]
           }
         ],
+        //聊天记录
         chatInformation: []
       }
     };
   },
-  computed: {
-    // checkdata() {
-    //   let { customName, staffName } = JSON.parse(
-    //     JSON.stringify(this.getData.chatInformation[0].customName)
-    //   );
-    //   this.getData.chatInformation[0].customName = staffName;
-    //   this.getData.chatInformation[0].staffName = customName;
-    //   return this.getData.chatInformation[0];
-    // }
-  },
+  computed: {},
   components: {
     Chat,
     Staff,
     Session
   },
   created() {
+    //初始化获取聊天数据
     this.lineCheck();
   },
   mounted() {},
   methods: {
+    //点击员工列表中的item切换其下标
     checkClick(ind) {
       this.ind = ind;
-      this.uid = 0;
+    },
+    //点击会话列表是再次获取聊天区域的数据
+    sessCheck() {
       this.lineCheck();
     },
-    sessCheck(uid) {
-      this.uid = uid;
-    },
+    //获取聊天区域的数据的方法
     lineCheck() {
+      //模拟获取到的数据
       let res = [
         {
           msgtype: "text",
@@ -335,6 +331,7 @@ export default {
             "湖南省携手“<span style='color:red'>泰康养老</span>”为长沙市社保居民定制专属“星惠保惠民保障方案”。切实解决“看病难、看病贵”等问题。"
         }
       ];
+      //将数据改成聊天组件需要的格式
       let resData = {};
       let arr = [];
       res.map((item, index) => {
@@ -351,7 +348,7 @@ export default {
         };
       });
       resData.chatcontent = arr;
-
+      //将改好的数据的赋值于聊天区域数据
       this.getData.chatInformation.push(resData);
     }
   }
