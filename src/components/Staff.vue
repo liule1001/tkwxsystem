@@ -13,7 +13,12 @@ export default {
   data() {
     return {};
   },
-  props: ["main"],
+  props: {
+      main:{
+          type: Object,
+          required: true
+      }
+  },
   methods: {},
   mounted() {}
 };
