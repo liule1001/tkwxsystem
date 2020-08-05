@@ -1,10 +1,10 @@
 <template>
   <div class="staffBox">
     <div class="fl">
-      <img :src="main.url" alt class="staffPic" />
-      <span class="name">{{main.username}}</span>
+      <img :src="main.avatar" alt class="staffPic" />
+      <span class="name">{{main.name}}</span>
     </div>
-    <div class="fr messageCounts">{{main.num}}</div>
+    <div class="fr messageCounts">{{main.msg_count}}</div>
   </div>
 </template>
 

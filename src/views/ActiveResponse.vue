@@ -1,7 +1,7 @@
 <template>
   <div class="activeResponse">
     <div style="margin: 5px 0 20px 0;">
-      <el-radio-group v-model="radio1" size="small">
+      <el-radio-group v-model="radio1" size="small" @change="timeChange">
         <el-radio label="1" border>当日</el-radio>
         <el-radio label="2" border>昨日</el-radio>
         <el-radio label="3" border>本周</el-radio>
@@ -67,6 +67,7 @@
 import Staff from "@/components/Staff.vue";
 import Session from "@/components/Session.vue";
 import Chat from "@/components/Chat.vue";
+import {today, yestoday, tommorrow, weekMon, weekNextMon, monthFirst, monthNextFirst} from "@/assets/js/time.js"
 export default {
   name: "hello",
   data() {
@@ -129,8 +130,31 @@ export default {
     //初始化获取聊天数据
     this.lineCheck();
   },
-  mounted() {},
+  mounted() {
+    console.log(today(),yestoday(),tommorrow(),weekMon(),weekNextMon(),monthFirst(),monthNextFirst(),"第一天")
+    // this.getStaffList(today(),tommorrow()) //刚进页面默认选择当天的日期进行筛选  传当天和下一天
+    this.getStaffList("2020-07-19","2020-07-20")
+  },
   methods: {
+    getStaffList(startTime,endTime){ //获取员工列表 
+      this.$http("text/activeResponse?time_between="+startTime+"&time_and="+endTime)
+      .then(response => {
+          console.log("response", response);
+      });
+    },
+    timeChange(e){  //单选按钮事件变化事件
+      console.log(e,'当前选择的内容')
+      this.radio1=e
+      if(e==1){ //说明是查询当天内容 传当天和明天
+        this.getStaffList(today(),tommorrow())
+      }else if(e==2){ //说明是查询昨天内容 传昨天和当天
+        this.getStaffList(yestoday(),today())
+      }else if(e==3){ //说明是查询本周内容 传本周一和下周一
+        this.getStaffList(weekMon(),weekNextMon())
+      }else if(e==4){ //说明是查询本月内容 传本月第一天和下月第一天
+        this.getStaffList(monthFirst(),monthNextFirst())
+      }
+    },
     //点击员工列表中的item切换其下标
     checkClick(ind) {
       this.ind = ind;

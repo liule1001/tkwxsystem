@@ -1,17 +1,17 @@
 <template>
   <div class="sessionVueBox">
     <div class="picBox">
-      <img src="main.url" alt class="staffPic" />
+      <img :src="main.avatar" alt class="staffPic" />
     </div>
     <div class="center">
-      <div class="name">{{main.username}}</div>
+      <div class="name">{{main.name}}</div>
       <div
         class="message ellipsis"
-      >fhdskjfhjksadlhfkjlhffsdfsdfsadfsadfdsasdjkhfjdklsahkjfadshkjhfasdkj</div>
+      >{{main.latest_news}}</div>
     </div>
     <div class="messageCounts">
-      <div class="count">{{main.num}}</div>
-      <div class="time">{{main.time}}</div>
+      <div class="count">{{main.msg_count}}</div>
+      <div class="time">{{main.latest_date}}</div>
     </div>
   </div>
 </template>
@@ -45,7 +45,7 @@ export default {
     }
   }
   .center {
-    width: calc(100% - 120px);
+    width: calc(100% - 20px);
     .name {
       height: 32px;
       line-height: 40px;

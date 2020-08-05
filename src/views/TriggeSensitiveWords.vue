@@ -50,7 +50,8 @@ export default {
       tableData: [],
       modalShow: false,
       chatInformation: {},
-      count: 100
+      count: 1,
+      wordLists:[]//放置敏感词的数组
     };
   },
   created() {
@@ -127,28 +128,65 @@ export default {
     });
     this.tableData = table;
   },
+  mounted(){
+    this.$http("/text/sensitiveWords")   //首先获取敏感词列表 然后再获取页面数据
+    .then(response => {
+      console.log("敏感词list", response);
+      let wordList = []
+      wordList = response.data
+      for(let i=0;i<wordList.length;i++){
+        this.wordLists.push(wordList[i].word_name)
+      }
+      this.getDate(1)  //获取页面数据
+    });
+    
+  },
   methods: {
     // deleteRow(index, rows) {
     //   // rows.splice(index, 1);
     //   this.modalShow = !this.modalShow
     //   alert(this.modalShow)
     // }
-    details(index) {
-      console.log(index);
+    getDate(page){ //进入页面获取数据
+      this.$http("/text/search", { 
+        time_between:"",
+        time_and:"",
+        page:page,
+        limit:10,
+        param:this.wordLists}, "post")
+      .then(response => {  //处理数据 展示在页面上
+          let table = response.data.map(item => {
+            return {
+              formm: item.fromm,
+              fromm_name: item.fromm_name || '',
+              formmIdentity: item.fromm.match("wm4f") ? "客户" : "员工",
+              msgtime: item.msgtime.replace(/\s+/g, "<br/>"),
+              content: item.content,
+              tolist: item.tolist,
+              tolist_name: item.tolist_name || '',
+              tolistIdentity: item.tolist.match("wm4f") ? "客户" : "员工"
+            };
+          });
+        this.tableData = table;
+        this.count=response.count  //分页展示的长度
+      });
+    },
+    details(row) {  //查看详情 调用接口 打开弹框  这个缺少返回值 先不动
+      console.log(row);
       let staffName =
-        index.formmIdentity === "员工" ? index.fromm_name : index.tolist_name; //通过判断是不是客户确定是哪个位置
+        row.formmIdentity === "员工" ? row.fromm_name : row.tolist_name; //通过判断是不是客户确定是哪个位置
       let customName =
-        index.formmIdentity === "员工" ? index.tolist_name : index.fromm_name;
-      let staffId = index.formmIdentity === "员工" ? index.formm : index.tolist;
-      let customId = index.formmIdentity === "员工" ? index.tolist : index.fromm;
-      console.log(index.formmIdentity,index.formmIdentity === "员工",staffId,customId)
+        row.formmIdentity === "员工" ? row.tolist_name : row.fromm_name;
+      let staffId = row.formmIdentity === "员工" ? row.formm : row.tolist;
+      let customId = row.formmIdentity === "员工" ? row.tolist : row.fromm;
+      console.log(row.formmIdentity,row.formmIdentity === "员工",staffId,customId)
       // 请求数据，回调执行一下操作
       // let param = {
       //   page: 1,
       //   limit: 10,
       //   msgtype: "text",
-      //   tolist:index.tolist,
-      //   formm:index.formm,
+      //   tolist:row.tolist,
+      //   formm:row.formm,
       //   time_between:item.msgtime.replace('<br/>', " ")
       // };
       // this.$http
@@ -276,8 +314,8 @@ export default {
       this.chatInformation = chatInformation;
       this.modalShow = !this.modalShow;
     },
-    handleCurrentChange(e) {
-      console.log("第几页", e);
+    handleCurrentChange(e) { //分页获取数据
+      this.getDate(e)  //根据分页再次获取数据
       // 再次请求
       // let param = {
       //   page: e,

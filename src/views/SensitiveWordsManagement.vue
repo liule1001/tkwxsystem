@@ -1,16 +1,16 @@
 <template>
   <div class="about">
-    <el-button plain @click="add()">新增敏感词</el-button>
+    <el-button plain @click="open('new','')">新增敏感词</el-button>
     <div class="existbox">
       <div class="sensitivetype">已有敏感词</div>
       <div class="editbox">
         <div v-for="(item,index) of dataSource" v-bind:key="index" class="innerbox">
           <el-button plain @click="isShow(index)">{{dataSource[index].data}}</el-button>
           <div class="editbtn" v-show="dataSource[index].isShowBtn">
-            <div @click="cancle(index)">
+            <div @click="cancle(item)">
               <i class="el-icon-close"></i>
             </div>
-            <div @click="edit(index)">
+            <div @click="open('edit',item.id)">
               <i class="el-icon-edit"></i>
             </div>
           </div>
@@ -31,8 +31,33 @@ export default {
       ]
     };
   },
+  mounted(){
+    this.getWords()
+  },
   methods: {
-    open(index) {
+    getWords(){
+      this.$http("/text/sensitiveWords")   //首先获取敏感词列表
+      .then(response => {
+        console.log("敏感词list", response);
+        this.dataSource = []
+        let wordList= [] 
+        wordList = response.data
+        for(let i=0;i<wordList.length;i++){
+          let obj={}
+          obj.data=wordList[i].word_name
+          obj.isShowBtn = false
+          obj.id=wordList[i].id
+          this.dataSource.push(obj)
+        }
+      
+      });
+    },
+    open(sign,id) {
+      if(sign==='new'){ //说明是新增敏感词
+        this.popTitle = "新增敏感词";
+      }else if(sign==='edit'){
+        this.popTitle = "修改敏感词";
+      }
       this.$prompt(this.popTitle, {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -46,18 +71,25 @@ export default {
         inputPlaceholder: "填写敏感词",
         showClose: false
       })
-        .then(() => {
-          //  console.log("e",e['value'])
-          // if (e.value!==null) {
-            // 接口请
-            this.$message({
-              type: "success",
-              message: this.popTitle + "成功"
-            });
-            if (index === 0 || index) {
-              this.dataSource[index].isShowBtn = false;
+        .then((e) => {  //点击确定按钮
+           console.log("e",e['value'],e.value)
+          if (e.value!==null) {
+            if(sign==='new'){ //说明是新增敏感词
+              this.addWord(e.value)
+            }else if(sign==='edit'){
+              this.edit(e.value,id)
             }
-          // }
+            
+            // 接口请
+            // this.$message({
+            //   type: "success",
+            //   message: this.popTitle + "成功"
+            // });
+            // if (sign === 0 || sign) {
+            //   this.dataSource[sign].isShowBtn = false;
+            // }
+            
+          }
           //  else {
           //   this.$message({
           //     type: "success",
@@ -66,40 +98,62 @@ export default {
           // }
         })
 
-        .catch(() => {
+        .catch(() => { //点击取消按钮
           this.$message({
             type: "info",
             message: "取消输入"
           });
-          if (index === 0 || index) {
-            this.dataSource[index].isShowBtn = false;
-          }
+          // if (index === 0 || index) {
+          //   this.dataSource[index].isShowBtn = false;
+          // }
         });
     },
-    cancle(index) {
-      // 删除接口调用
-      this.$http.post({url:'/ceping-0.0.1-SNAPSHOT/ceping/save'}).then((response)=> {
+    cancle(item) { // 删除接口调用
+      // this.$http.post({url:'/ceping-0.0.1-SNAPSHOT/ceping/save'}).then((response)=> {
+      //     console.log("response", response);
+      //     this.$message({
+      //       type: "info",
+      //       message: "删除成功"
+      //     });
+      //     this.dataSource[index].isShowBtn = false;
+      //   });
+      this.$http("/text/deleteSensitiveWord?id="+item.id, {}, "post")
+      .then(response => {
           console.log("response", response);
           this.$message({
             type: "info",
             message: "删除成功"
           });
-          this.dataSource[index].isShowBtn = false;
+          this.getWords()
+      });
+      },
+    edit(e,id) {  //编辑接口
+      this.$http("/text/updateSensitiveWord", {word_name:e,id}, "post")
+        .then(response => {
+          console.log(response)
+          this.successInfo()
         });
     },
-    edit(index) {
-      this.popTitle = "修改敏感词";
-      this.open(index);
+    addWord(e){ //添加敏感词
+      this.$http("/text/addSensitiveWord", {word_name:e}, "post")
+        .then(response => {
+          console.log(response)
+          this.successInfo()
+        });
+    },
+    successInfo(){ //敏感词增删改查成功后 统一的操作
+      this.$message({
+        type: "success",
+        message: this.popTitle + "成功"
+      });
+      this.getWords()
     },
     add() {
       this.popTitle = "新增敏感词";
       this.open();
-      this.$http("/text/addSensitiveWord", {wordname:"123"}, "post")
-        .then(response => {
-          console.log("response", response);
-        });
+      
     },
-    isShow(index) {
+    isShow(index) {  //展示可以编辑的几个小按钮
       console.log(index);
       this.dataSource[index].isShowBtn = !this.dataSource[index].isShowBtn;
     },

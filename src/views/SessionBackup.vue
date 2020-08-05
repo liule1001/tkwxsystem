@@ -11,13 +11,13 @@
                 active-text-color="#333"
                 :unique-opened= Boolean(true)
             >
-                <el-submenu v-for="(item,index) in staffList" :key="index" :index="index">
+                <el-submenu v-for="(val,key,i) in staffList" :key="i" :index="i">
                     <template slot="title">
-                        <span>{{item.title}}</span>
+                        <span>{{key}}</span>
                     </template>
-                    <el-menu-item v-for="(v,i) in item.main" :key="i" @click="checkClick(String(i))">
+                    <el-menu-val v-for="(v,i) in val" :key="i" @click="checkClick(String(v.userid))">
                         <staff :main="v" />
-                    </el-menu-item>
+                    </el-menu-val>
                 </el-submenu>
             </el-menu>
         </el-col>
@@ -29,7 +29,7 @@
                 text-color="#333"
                 active-text-color="#333"
             >
-                <el-menu-item v-for="(item,k) in checkMain[ind].main" :key="k" @click="sessCheck()">
+                <el-menu-item v-for="(item,k) in checkMain" :key="k" @click="sessCheck(item)">
                     <Session :main="item" />
                 </el-menu-item>
             </el-menu>
@@ -50,48 +50,49 @@ export default {
     name: "hello",
     data() {
         return {
-            ind: 0, //初始化选中员工下标
+            ind: "", //初始化选中员工下标
             // 员工列表
-            staffList: [
-                {
-                    title: "BGC项目",
-                    main: [
-                        {
-                            url: "1.jpg",
-                            username: "石艳零",
-                            num: 300
-                        },
-                        {
-                            url: "2.jpg",
-                            username: "乐",
-                            num: 300
-                        },
-                    ]
-                },
+            // staffList: [
+            //     {
+            //         title: "BGC项目",
+            //         main: [
+            //             {
+            //                 url: "1.jpg",
+            //                 username: "石艳零",
+            //                 num: 300
+            //             },
+            //             {
+            //                 url: "2.jpg",
+            //                 username: "乐",
+            //                 num: 300
+            //             },
+            //         ]
+            //     },
                
-            ],
+            // ],
+            staffList:{},
             //会话列表
             checkMain: [
-                {
-                    main: [
-                        {
-                            url: "1.jpg",
-                            username: "石艳零",
-                            num: 300,
-                            time: "5/20"
-                        }
-                    ]
-                },
-                {
-                    main: [
-                        {
-                            url: "2.jpg",
-                            username: "乐",
-                            num: 300,
-                            time: "5/20"
-                        }
-                    ]
-                }
+                // {
+                //     main: [
+                //         {
+                //             url: "1.jpg",
+                //             username: "石艳零",
+                //             num: 300,
+                //             time: "5/20"
+                //         }
+                //     ]
+                // },
+                // {
+                //     main: [
+                //         {
+                //             url: "2.jpg",
+                //             username: "乐",
+                //             num: 300,
+                //             time: "5/20"
+                //         }
+                //     ]
+                // }
             ],
             //聊天记录
             chatInformation: []
@@ -106,7 +107,7 @@ export default {
     created() {
         this.getStaffList();
         //初始化获取聊天数据
-        this.lineCheck();
+        // this.lineCheck();
     },
     mounted() {},
     methods: {
@@ -114,18 +115,34 @@ export default {
         getStaffList() {
             // setInterval(() => {
             this.$http("/user/users").then(response => {
-                console.log("response", response);
-                this.staffList.main = response.data;
+                // console.log("response", response);
+                this.staffList = response.data;
             });
             // }, 1000);
         },
         //点击员工列表中的item切换其下标
         checkClick(ind) {
             this.ind = ind;
+            this.$http("/user/follows?userId="+ind).then(response => {
+                console.log("response1111", response);
+                this.checkMain = response.data;
+                console.log(this.checkMain)
+            });
         },
         //点击会话列表是再次获取聊天区域的数据
-        sessCheck() {
-            this.lineCheck();
+        sessCheck(item) {
+            console.log(item)
+            this.$http("/text/dialogue", { 
+                page:1,
+                limit:3,
+                time_between:"2020-01-01 18:10:00",
+                time_and:"2021-08-01 18:10:00",
+                dialogue_id:item.dialogue_id
+            }, "post")
+            .then(response => {
+                console.log("response", response);
+            });
+            this.lineCheck(item);
         },
         //获取聊天区域的数据的方法
         lineCheck() {
@@ -176,8 +193,8 @@ export default {
             let arr = [];
             res.map((item, index) => {
                 if (this.ind) {
-                    resData.customName = item.fromm_name;
-                    resData.staffName = item.tolist_name;
+                    resData.customName = item.fromm_name;  //发送者
+                    resData.staffName = item.tolist_name;  //接收者
                 }
                 resData.customName = item.tolist_name;
                 resData.staffName = item.fromm_name;
