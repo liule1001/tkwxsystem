@@ -168,7 +168,7 @@ export default {
         if(this.isContinueGetList){
               this.$http("/text/dialogue", { 
                 page:this.page,
-                limit:10,
+                limit:100,
                 time_between:`${this.startTime} 00:00:00`,
                 time_and:`${this.endTime} 00:00:00`,
                 dialogue_id:item.dialogue_id
