@@ -38,7 +38,6 @@ export default {
     getWords(){
       this.$http("/text/sensitiveWords")   //首先获取敏感词列表
       .then(response => {
-        console.log("敏感词list", response);
         this.dataSource = []
         let wordList= [] 
         wordList = response.data
@@ -72,7 +71,6 @@ export default {
         showClose: false
       })
         .then((e) => {  //点击确定按钮
-           console.log("e",e['value'],e.value)
           if (e.value!==null) {
             if(sign==='new'){ //说明是新增敏感词
               this.addWord(e.value)
@@ -80,22 +78,6 @@ export default {
               this.edit(e.value,id)
             }
             
-            // 接口请
-            // this.$message({
-            //   type: "success",
-            //   message: this.popTitle + "成功"
-            // });
-            // if (sign === 0 || sign) {
-            //   this.dataSource[sign].isShowBtn = false;
-            // }
-            
-          }
-          //  else {
-          //   this.$message({
-          //     type: "success",
-          //     message: "取消填写"
-          //   });
-          // }
         })
 
         .catch(() => { //点击取消按钮
@@ -109,14 +91,6 @@ export default {
         });
     },
     cancle(item) { // 删除接口调用
-      // this.$http.post({url:'/ceping-0.0.1-SNAPSHOT/ceping/save'}).then((response)=> {
-      //     console.log("response", response);
-      //     this.$message({
-      //       type: "info",
-      //       message: "删除成功"
-      //     });
-      //     this.dataSource[index].isShowBtn = false;
-      //   });
       this.$http("/text/deleteSensitiveWord?id="+item.id, {}, "post")
       .then(response => {
           console.log("response", response);
@@ -154,7 +128,6 @@ export default {
       
     },
     isShow(index) {  //展示可以编辑的几个小按钮
-      console.log(index);
       this.dataSource[index].isShowBtn = !this.dataSource[index].isShowBtn;
     },
     checkLength(e) {
@@ -166,7 +139,7 @@ export default {
       }
       let symbolLength = e.length - len;
       if (symbolLength + len * 2 <= 16) {
-        console.log(symbolLength + len * 2);
+        // console.log(symbolLength + len * 2);
         return true;
       } else {
         return false;

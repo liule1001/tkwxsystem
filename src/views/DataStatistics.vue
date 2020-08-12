@@ -29,7 +29,7 @@
       </div>
 
       <el-button size="small" @click="select()">查询</el-button>
-      <el-button size="small">导出Excle</el-button>
+      <el-button size="small" @click="download()">导出Excle</el-button>
     </div>
     <el-table :data="tableData" style="width: 100%">
       <el-table-column prop="user_name" label="成员姓名" align="center"></el-table-column>
@@ -90,36 +90,70 @@ export default {
       radio1: "1",
       startTime: "",
       endTime: "",
+      endTimeTom:"",//最后一天的后一天
       tableData: []
     };
   },
   mounted() {
-    this.getTableData()
+    this.getTableData(today(),tommorrow())
   },
   methods: {
-    getTableData() { //获取表格数据  不好用
-      this.$http("/text/statistics?time_between=2020-01-10&time_and=2020-08-04")
+    getTableData(startTime,endTime) { //获取表格数据  不好用
+      this.$http("/text/statistics?time_between="+startTime+"&time_and="+endTime)
       .then(response => {
         this.tableData=response.data
-          console.log("response", response);
       });
+    },
+    timeChange(e){  //单选按钮事件变化事件
+      this.radio1=e
+      if(e==1){ //说明是查询当天内容 传当天和明天
+        this.getTableData(today(),tommorrow())
+        this.endTimeTom=''
+      }else if(e==2){ //说明是查询昨天内容 传昨天和当天
+        this.getTableData(yestoday(),today())
+        this.endTimeTom=''
+      }else if(e==3){ //说明是查询本周内容 传本周一和下周一
+        this.getTableData(weekMon(),weekNextMon())
+        this.endTimeTom=''
+      }else if(e==4){ //说明是查询本月内容 传本月第一天和下月第一天
+        this.getTableData(monthFirst(),monthNextFirst())
+        this.endTimeTom=''
+      }
     },
     select() {
       if (this.radio1 === "5") {
-        // 自定义时段发送起始至终止日期
-        this.$http
-          .post({ url: "/ceping-0.0.1-SNAPSHOT/ceping/save" })
-          .then(response => {
-            console.log("response", response);
-          });
-      } else {
+        // 自定义时段发送起始至终止日期  要查当天内容，需要给后端传当天之后的一天 所以要获取自定义的明天
+        let tommorrows=new Date(this.endTime)
+        tommorrows.setTime(tommorrows.getTime()+24*60*60*1000);
+        this.endTimeTom = tommorrows.getFullYear()+"-" + (tommorrows.getMonth()+1) + "-" + tommorrows.getDate();
+        this.getTableData(this.startTime,this.endTimeTom)
+      } else {  //修改为点击按钮就请求一次  查询按钮只为自定义时间服务
         // 否则发送当日，本月等
-        this.$http
-          .post({ url: "/ceping-0.0.1-SNAPSHOT/ceping/save" })
-          .then(response => {
-            console.log("response", response);
-          });
       }
+    },
+    getExcel(startTime,endTime){ //下载Excel
+      let elink = document.createElement('a');
+      elink.download = "download.xls";
+      elink.href = `http://139.9.138.74:8080/text/downloadExcel?time_between=${startTime}&time_and=${endTime}`;
+      elink.click();
+    },
+    download(){  //点击下载按钮
+      if(this.radio1 === "5"&&this.endTimeTom===''){
+        this.$message.error("请先点击查询按钮")
+      }else{
+        if(this.radio1==1){ //说明是查询当天内容 传当天和明天
+          this.getExcel(today(),tommorrow())
+        }else if(this.radio1==2){ //说明是查询昨天内容 传昨天和当天
+          this.getExcel(yestoday(),today())
+        }else if(this.radio1==3){ //说明是查询本周内容 传本周一和下周一
+          this.getExcel(weekMon(),weekNextMon())
+        }else if(this.radio1==4){ //说明是查询本月内容 传本月第一天和下月第一天
+          this.getExcel(monthFirst(),monthNextFirst())
+        }else if(this.radio1==5){ //说明是查询自定义
+          this.getExcel(this.startTime,this.endTimeTom)
+        }
+      }
+      
     }
   }
 };

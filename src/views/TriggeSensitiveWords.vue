@@ -35,7 +35,7 @@
     <div v-if="modalShow">
       <el-dialog title="聊天内容" :visible.sync="modalShow" center>
         <!-- flag 为区别滑动的展示不同设置变量 -->
-        <Chat :content="chatInformation" :flag="false" />
+        <Chat :content="chatInformation" :flag="false" @page-change="pageChange" :isContinueGetList="isContinueGetList"/>
       </el-dialog>
     </div>
   </div>
@@ -49,89 +49,20 @@ export default {
     return {
       tableData: [],
       modalShow: false,
-      chatInformation: {},
+      chatInformation: {}, //放置聊天记录
       count: 1,
-      wordLists:[]//放置敏感词的数组
+      wordLists:[] ,//放置敏感词的数组
+      page:1, //当前页数
+      id:"" ,//获取聊天内容需要提供ID
+      isContinueGetList:true ,//是否一直滚动的时候调用接口
     };
   },
   created() {
-    let res = [
-      {
-        msgtype: "text",
-        msgid: "12271759686357257076_1593752074",
-        action: "send",
-        fromm: "WuXiaoWen",
-        fromm_name: "吴晓雯",
-        tolist: "[wm4fJCBgAA9Ryoo8mEFptgooXcZFQZBQ]",
-        tolist_name: "乐",
-        roomid: "",
-        msgtime: "2020-07-03 12:54:34",
-        content: "触发了<span style='color:red'>12345</span>敏感词"
-      },
-      {
-        msgtype: "text",
-        msgid: "9867567917735866980_1593751929",
-        action: "send",
-        fromm: "ShiYanLing",
-        fromm_name: "石艳零",
-        tolist: "[wm4fJCBgAAmMqeyeGHUieC7bZULKwyAA]",
-        tolist_name: "乐",
-        roomid: "",
-        msgtime: "2020-07-03 12:52:10",
-        content:
-          "湖南省携手“<span style='color:red'>泰康养老</span>”为长沙市社保居民定制专属“星惠保惠民保障方案”。切实解决“看病难、看病贵”等问题。"
-      },
-      {
-        msgtype: "text",
-        msgid: "12271759686357257076_1593752074",
-        action: "send",
-        fromm: "WuXiaoWen",
-        tolist: "[wm4fJCBgAA9Ryoo8mEFptgooXcZFQZBQ]",
-        roomid: "",
-        msgtime: "2020-07-03 12:54:34",
-        content: "触发了<span style='color:red'>12345</span>敏感词"
-      },
-      {
-        msgtype: "text",
-        msgid: "9867567917735866980_1593751929",
-        action: "send",
-        fromm: "ShiYanLing",
-        tolist: "[wm4fJCBgAAmMqeyeGHUieC7bZULKwyAA]",
-        roomid: "",
-        msgtime: "2020-07-03 12:52:10",
-        content:
-          "湖南省携手“<span style='color:red'>泰康养老</span>”为长沙市社保居民定制专属“星惠保惠民保障方案”。切实解决“看病难、看病贵”等问题。"
-      }
-    ];
-    // 初始化请求
-    // let param = {
-    //   page: 1,
-    //   limit: 10,
-    //   msgtype: "text"
-    // };
-    // this.$http
-    // .post({ url: "/ceping-0.0.1-SNAPSHOT/ceping/save",arg: param})
-    //   .then(response => {
-    //     console.log("response", response);
-    //   });
-    let table = res.map(item => {
-      return {
-        formm: item.fromm,
-        fromm_name: item.fromm_name,
-        formmIdentity: item.fromm.match("wm4f") ? "客户" : "员工",
-        msgtime: item.msgtime.replace(/\s+/g, "<br/>"),
-        content: item.content,
-        tolist: item.tolist,
-        tolist_name: item.tolist_name,
-        tolistIdentity: item.tolist.match("wm4f") ? "客户" : "员工"
-      };
-    });
-    this.tableData = table;
+    
   },
   mounted(){
     this.$http("/text/sensitiveWords")   //首先获取敏感词列表 然后再获取页面数据
     .then(response => {
-      console.log("敏感词list", response);
       let wordList = []
       wordList = response.data
       for(let i=0;i<wordList.length;i++){
@@ -164,7 +95,9 @@ export default {
               content: item.content,
               tolist: item.tolist,
               tolist_name: item.tolist_name || '',
-              tolistIdentity: item.tolist.match("wm4f") ? "客户" : "员工"
+              tolistIdentity: item.tolist.match("wm4f") ? "客户" : "员工",
+              dialogue_id:item.dialogue_id , //根据ID查询聊天记录
+              msgtimes:item.msgtime
             };
           });
         this.tableData = table;
@@ -172,161 +105,83 @@ export default {
       });
     },
     details(row) {  //查看详情 调用接口 打开弹框  这个缺少返回值 先不动
-      console.log(row);
-      let staffName =
-        row.formmIdentity === "员工" ? row.fromm_name : row.tolist_name; //通过判断是不是客户确定是哪个位置
-      let customName =
-        row.formmIdentity === "员工" ? row.tolist_name : row.fromm_name;
-      let staffId = row.formmIdentity === "员工" ? row.formm : row.tolist;
-      let customId = row.formmIdentity === "员工" ? row.tolist : row.fromm;
-      console.log(row.formmIdentity,row.formmIdentity === "员工",staffId,customId)
-      // 请求数据，回调执行一下操作
-      // let param = {
-      //   page: 1,
-      //   limit: 10,
-      //   msgtype: "text",
-      //   tolist:row.tolist,
-      //   formm:row.formm,
-      //   time_between:item.msgtime.replace('<br/>', " ")
-      // };
-      // this.$http
-      // .post({ url: "/ceping-0.0.1-SNAPSHOT/ceping/save",arg: param})
-      //   .then(response => {
-      //     console.log("response", response);
-      //   });
-      let res = [
-        {
-          msgtype: "text",
-          msgid: "6090739809806389162_1593580896",
-          action: "send",
-          fromm: "WuXiaoWen",
-          // fromm_name:''
-          tolist: "[wm4fJCBgAA9Ryoo8mEFptgooXcZFQZBQ]",
-          roomid: "",
-          msgtime: "2020-07-01 13:21:37",
-          content: "聊天<span style='color:red'>一</span>"
-        },
-        {
-          msgtype: "text",
-          msgid: "18359870725314323191_1593580901",
-          action: "send",
-          fromm: "WuXiaoWen",
-          tolist: "[wm4fJCBgAA9Ryoo8mEFptgooXcZFQZBQ]",
-          roomid: "",
-          msgtime: "2020-07-01 13:21:41",
-          content: "我这信号好像不太好"
-        },
-        {
-          msgtype: "text",
-          msgid: "13844107868684910760_1593580916",
-          action: "send",
-          fromm: "[wm4fJCBgAA9Ryoo8mEFptgooXcZFQZBQ]",
-          tolist: "WuXiaoWen",
-          roomid: "",
-          msgtime: "2020-07-01 13:21:56",
-          content: "马上"
-        },
-        {
-          msgtype: "text",
-          msgid: "6090739809806389162_1593580896",
-          action: "send",
-          fromm: "[wm4fJCBgAA9Ryoo8mEFptgooXcZFQZBQ]",
-          tolist: "WuXiaoWen",
-          roomid: "",
-          msgtime: "2020-07-01 13:21:37",
-          content: "聊天<span style='color:red'>一</span>"
-        },
-        {
-          msgtype: "text",
-          msgid: "18359870725314323191_1593580901",
-          action: "send",
-          fromm: "WuXiaoWen",
-          tolist: "[wm4fJCBgAA9Ryoo8mEFptgooXcZFQZBQ]",
-          roomid: "",
-          msgtime: "2020-07-01 13:21:41",
-          content: "我这信号好像不太好"
-        },
-        {
-          msgtype: "text",
-          msgid: "13844107868684910760_1593580916",
-          action: "send",
-          fromm: "[wm4fJCBgAA9Ryoo8mEFptgooXcZFQZBQ]",
-          tolist: "WuXiaoWen",
-          roomid: "",
-          msgtime: "2020-07-01 13:21:56",
-          content: "马上"
-        },
-        {
-          msgtype: "text",
-          msgid: "6090739809806389162_1593580896",
-          action: "send",
-          fromm: "[wm4fJCBgAA9Ryoo8mEFptgooXcZFQZBQ]",
-          tolist: "WuXiaoWen",
-          roomid: "",
-          msgtime: "2020-07-01 13:21:37",
-          content: "聊天<span style='color:red'>一</span>"
-        },
-        {
-          msgtype: "text",
-          msgid: "18359870725314323191_1593580901",
-          action: "send",
-          fromm: "WuXiaoWen",
-          tolist: "[wm4fJCBgAA9Ryoo8mEFptgooXcZFQZBQ]",
-          roomid: "",
-          msgtime: "2020-07-01 13:21:41",
-          content: "我这信号好像不太好"
-        },
-        {
-          msgtype: "text",
-          msgid: "13844107868684910760_1593580916",
-          action: "send",
-          fromm: "[wm4fJCBgAA9Ryoo8mEFptgooXcZFQZBQ]",
-          tolist: "WuXiaoWen",
-          roomid: "",
-          msgtime: "2020-07-01 13:21:56",
-          content: "马上"
-        },
-        {
-          msgtype: "text",
-          msgid: "6090739809806389162_1593580896",
-          action: "send",
-          fromm: "[wm4fJCBgAA9Ryoo8mEFptgooXcZFQZBQ]",
-          tolist: "WuXiaoWen",
-          roomid: "",
-          msgtime: "2020-07-01 13:21:37",
-          content: "聊天<span style='color:red'>一</span>"
+      this.sessCheck(row,1)
+      this.modalShow = !this.modalShow;  //弹框展示
+    },
+    //点击会话列表是再次获取聊天区域的数据
+    sessCheck(item,index) {
+      let beforeOneHour='' //对话前1小时
+      let afterOneHour = '' //对话后1小时
+        if(index==1){ //说明是头一次获取聊天记录   需要将数组清空 时间控制在这个消息的当天
+            this.chatInformation={}
+            this.page=1
+            let myDate1 = new Date(item.msgtimes)
+            let myDate2 = new Date(item.msgtimes)
+            myDate1.setTime(myDate1.getTime()-2*60*1000); //前1小时
+            myDate2.setTime(myDate2.getTime()+2*60*1000); //后1小时
+            beforeOneHour = myDate1.getFullYear()+"-" + (myDate1.getMonth()+1) + "-" + myDate1.getDate()+" "+myDate1.getHours() + ":" + myDate1.getMinutes() + ":" + myDate1.getSeconds();
+            afterOneHour = myDate2.getFullYear()+"-" + (myDate2.getMonth()+1) + "-" + myDate2.getDate()+" "+myDate2.getHours() + ":" + myDate2.getMinutes() + ":" + myDate2.getSeconds();
+
+            this.isContinueGetList=true
+        }else if(index==2){ //说明是滚动加载  不能清空原始数组   页数还得加1
+            this.page=this.page+1
+            afterOneHour = ""
         }
-      ];
-      let chatcontent = res.map(item => {
-        return {
-          role: item.fromm === staffId ? "staff" : "custom",
-          msgtime: item.msgtime,
-          content: item.content
-        };
-      });
-      let chatInformation = {
-        staffId: staffId,
-        customId: customId,
-        staffName: staffName,
-        customName: customName,
-        chatcontent: chatcontent
-      };
-      this.chatInformation = chatInformation;
-      this.modalShow = !this.modalShow;
+        this.id=item.dialogue_id
+        if(this.isContinueGetList){
+              this.$http("/text/dialogue", { 
+                page:this.page,
+                limit:10,
+                time_between:beforeOneHour,
+                time_and:afterOneHour,
+                dialogue_id:item.dialogue_id
+            }, "post")
+            .then(response => {
+                if(response.data&&response.data.length>0){
+                    this.lineCheck(response.data,index);
+                    this.isContinueGetList=true
+                }else{
+                    this.isContinueGetList=false
+                }
+                
+            });
+        } 
+    },
+    //获取聊天区域的数据的方法
+    lineCheck(list,index) {
+        //模拟获取到的数据
+        //将数据改成聊天组件需要的格式
+        let resData = {};
+        let arr = [];
+        list.map((item, index) => {
+            if (this.ind) {
+                resData.customName = item.fromm_name;  //发送者
+                resData.staffName = item.tolist_name;  //接收者
+            }
+            resData.customName = item.tolist_name;
+            resData.staffName = item.fromm_name;
+            arr[index] = { //wm是外部人员
+                role: item.tolist.indexOf("wm") === -1 ? "staff" : "custom",
+                msgtime: item.msgtime,
+                content: item.content
+            };
+        });
+        resData.chatcontent = arr;
+        //将改好的数据的赋值于聊天区域数据
+        if(index==1){
+              this.chatInformation=resData;
+        }else if(index==2){
+            this.chatInformation.chatcontent = this.chatInformation.chatcontent.concat(arr);
+        }
+        this.chatInformation.chatcontent.reverse()
+    },
+    pageChange(val){ //聊天改变 再次请求数据
+        if(val=='add'){
+            this.sessCheck({dialogue_id:this.id,msgtimes:""},2)
+        }
     },
     handleCurrentChange(e) { //分页获取数据
       this.getDate(e)  //根据分页再次获取数据
-      // 再次请求
-      // let param = {
-      //   page: e,
-      //   limit: 10,
-      //   msgtype: "text"
-      // };
-      // this.$http
-      // .post({ url: "/ceping-0.0.1-SNAPSHOT/ceping/save",arg: param})
-      //   .then(response => {
-      //     console.log("response", response);
-      //   });
     }
   }
 };

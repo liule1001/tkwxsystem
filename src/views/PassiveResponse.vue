@@ -11,7 +11,6 @@
     <div>
       <el-col class="staffList">
         <h5>员工列表</h5>
-        <!-- horizontal,vertical -->
         <el-menu
           default-active="2"
           class="el-menu-vertical-demo"
@@ -21,11 +20,11 @@
           active-text-color="#333"
           :unique-opened="true"
         >
-          <el-submenu v-for="(item,index) in getData.first" :key="index" index="index">
+          <el-submenu v-for="(val,key,i) in staffList" :key="Number(i)" :index="String(i)">
             <template slot="title">
-              <span>{{item.title}}</span>
+              <span>{{key}}</span>
             </template>
-            <el-menu-item v-for="(v,i) in item.main" :key="i" @click="checkClick(i)">
+            <el-menu-item v-for="(v,i) in val" :key="Number(i)" @click="checkClick(v)">
               <staff :main="v" />
             </el-menu-item>
             <!-- <el-menu-item>
@@ -47,9 +46,9 @@
           active-text-color="#333"
         >
           <el-menu-item
-            v-for="(item,k) in getData.checkMain[ind].main"
-            :key="k"
-            @click="sessCheck()"
+            v-for="(item,k) in currentCoversation"
+            :key="Number(k)"
+            @click="sessCheck(item,1)"
           >
             <Session :main="item" />
           </el-menu-item>
@@ -58,7 +57,7 @@
       <el-col>
         <h5>聊天记录</h5>
         <!-- flag 为区别滑动的展示不同设置变量 -->
-        <Chat :content="getData.chatInformation[0]" :flag="true" />
+        <Chat :content="chatInformation[0]" :flag="false" @page-change="pageChange" :isContinueGetList="isContinueGetList"/>
       </el-col>
     </div>
   </div>
@@ -74,52 +73,18 @@ export default {
   data() {
     return {
       radio1: "1",
-      ind: 0, //初始化选中员工下标
-      getData: {
-        // 员工列表
-        first: [
-          {
-            title: "BGC项目",
-            main: [
-              {
-                url: "1.jpg",
-                username: "石艳零",
-                num: 300
-              },
-              {
-                url: "2.jpg",
-                username: "乐",
-                num: 300
-              }
-            ]
-          }
-        ],
-        //会话列表
-        checkMain: [
-          {
-            main: [
-              {
-                url: "1.jpg",
-                username: "石艳零",
-                num: 300,
-                time: "5/20"
-              }
-            ]
-          },
-          {
-            main: [
-              {
-                url: "2.jpg",
-                username: "乐",
-                num: 300,
-                time: "5/20"
-              }
-            ]
-          }
-        ],
-        //聊天记录
-        chatInformation: []
-      }
+      id:'', //初始化选中员工下标
+      staffList:[],
+      coversationList:{},//会话列表  是一个对象 key与员工列表中userId对应
+      currentCoversation:[],//当前员工对应的会话列表
+      chatInformation: [{}],//聊天记录
+      page:1, //当前页数
+      dialog_id:"" ,//获取聊天内容需要提供ID
+      isContinueGetList:true ,//是否一直滚动的时候调用接口
+      // startTime:today(),
+      // endTime:tommorrow() ,
+      startTime:"2020-07-01",
+      endTime:"2020-07-30" ,
     };
   },
   components: {
@@ -129,255 +94,130 @@ export default {
   },
   created() {
     //初始化获取聊天数据
-    this.lineCheck();
+    // this.lineCheck();
   },
   mounted() {
-    this.getStaffList(today(),tommorrow()) //刚进页面默认选择当天的日期进行筛选  传当天和下一天
+    this.getStaffList() //获取员工信息
+    // this.getCoversationList(today(),tommorrow()) //刚进页面默认选择当天的日期进行筛选  传当天和下一天
+    this.getCoversationList("2020-07-19","2020-07-20")
   },
   methods: {
-    getStaffList(startTime,endTime){ //获取员工列表 
-      this.$http("text/passiveResponse?time_between="+startTime+"&time_and="+endTime)
-      .then(response => {
-          console.log("response", response);
+    getStaffList(){ //获取员工列表
+      this.$http("/user/users").then(response => {
+          this.staffList = response.data;
       });
     },
+    getCoversationList(startTime,endTime){ //获取员工列表 最后进行匹配
+      this.currentCoversation=[]//刚刚获取全部数据的时候 当前的会话调整为空
+      this.chatInformation=[{}]
+      this.$http("text/passiveResponse?time_between="+startTime+"&time_and="+endTime)
+      .then(response => {
+          this.coversationList=response.data
+      });
+    },
+    getRightResult(){ //匹配正确的员工和会话 进行展示
+      for(let p in this.coversationList){
+        if(this.id==p){ //筛选出员工对应的会话
+          this.currentCoversation=this.coversationList[p]
+          return
+        }else{ //说明没有匹配项
+          this.currentCoversation=[{}]
+        }
+        
+      }
+    
+      
+    },
     timeChange(e){  //单选按钮事件变化事件
-      console.log(e,'当前选择的内容')
       this.radio1=e
       if(e==1){ //说明是查询当天内容 传当天和明天
-        this.getStaffList(today(),tommorrow())
+        this.getCoversationList(today(),tommorrow())
+        this.startTime=today()
+        this.endTime=tommorrow()
       }else if(e==2){ //说明是查询昨天内容 传昨天和当天
-        this.getStaffList(yestoday(),today())
+        this.getCoversationList(yestoday(),today())
+        this.startTime=yestoday()
+        this.endTime=today()
       }else if(e==3){ //说明是查询本周内容 传本周一和下周一
-        this.getStaffList(weekMon(),weekNextMon())
+        this.getCoversationList(weekMon(),weekNextMon())
+        this.startTime=weekMon()
+        this.endTime=weekNextMon()
       }else if(e==4){ //说明是查询本月内容 传本月第一天和下月第一天
-        this.getStaffList(monthFirst(),monthNextFirst())
+        this.getCoversationList(monthFirst(),monthNextFirst())
+        this.startTime=monthFirst()
+        this.endTime=monthNextFirst()
       }
     },
     //点击员工列表中的item切换其下标
-    checkClick(ind) {
-      this.ind = ind;
+    checkClick(item) {
+      this.id = item.userid;
+      this.currentCoversation=[] //当前会话列表清空
+      this.chatInformation=[{}] //聊天记录清空
+      this.getRightResult()
     },
     //点击会话列表是再次获取聊天区域的数据
-    sessCheck() {
-      this.lineCheck();
+    sessCheck(item,index) {
+        if(index==1){ //说明是头一次获取聊天记录   需要将数组清空
+            this.chatInformation=[{}]
+            this.page=1
+            this.isContinueGetList=true
+        }else if(index==2){ //说明是滚动加载  不能清空原始数组   页数还得加1
+            this.page=this.page+1
+        }
+        this.dialog_id=item.dialogue_id
+        if(this.isContinueGetList){
+              this.$http("/text/dialogue", { 
+                page:this.page,
+                limit:10,
+                time_between:`${this.startTime} 00:00:00`,
+                time_and:`${this.endTime} 00:00:00`,
+                dialogue_id:item.dialogue_id
+            }, "post")
+            .then(response => {
+                if(response.data.length>0){
+                    this.lineCheck(response.data,index);
+                    this.isContinueGetList=true
+                }else{
+                    this.isContinueGetList=false
+                }
+                
+            });
+        } 
     },
     //获取聊天区域的数据的方法
-    lineCheck() {
-      //模拟获取到的数据
-      let res = [
-        {
-          msgtype: "text",
-          msgid: "9867567917735866980_1593751929",
-          action: "send",
-          fromm: "ShiYanLing",
-          fromm_name: "石艳零",
-          tolist: "[wm4fJCBgAAmMqeyeGHUieC7bZULKwyAA]",
-          tolist_name: "乐",
-          roomid: "",
-          msgtime: "2020-07-03 12:52:10",
-          content:
-            "湖南省携手“<span style='color:red'>泰康养老</span>”为长沙市社保居民定制专属“星惠保惠民保障方案”。切实解决“看病难、看病贵”等问题。"
-        },
-        {
-          msgtype: "text",
-          msgid: "9867567917735866980_1593751929",
-          action: "send",
-          fromm: "ShiYanLing",
-          fromm_name: "石艳零",
-          tolist: "[wm4fJCBgAAmMqeyeGHUieC7bZULKwyAA]",
-          tolist_name: "乐",
-          roomid: "",
-          msgtime: "2020-07-03 12:52:10",
-          content:
-            "湖南省携手“<span style='color:red'>泰康养老</span>”为长沙市社保居民定制专属“星惠保惠民保障方案”。切实解决“看病难、看病贵”等问题。"
-        },
-        {
-          msgtype: "text",
-          msgid: "9867567917735866980_1593751929",
-          action: "send",
-          fromm: "ShiYanLing",
-          fromm_name: "石艳零",
-          tolist: "[wm4fJCBgAAmMqeyeGHUieC7bZULKwyAA]",
-          tolist_name: "乐",
-          roomid: "",
-          msgtime: "2020-07-03 12:52:10",
-          content:
-            "湖南省携手“<span style='color:red'>泰康养老</span>”为长沙市社保居民定制专属“星惠保惠民保障方案”。切实解决“看病难、看病贵”等问题。"
-        },
-        {
-          msgtype: "text",
-          msgid: "9867567917735866980_1593751929",
-          action: "send",
-          fromm: "ShiYanLing",
-          fromm_name: "石艳零",
-          tolist: "[wm4fJCBgAAmMqeyeGHUieC7bZULKwyAA]",
-          tolist_name: "乐",
-          roomid: "",
-          msgtime: "2020-07-03 12:52:10",
-          content:
-            "湖南省携手“<span style='color:red'>泰康养老</span>”为长沙市社保居民定制专属“星惠保惠民保障方案”。切实解决“看病难、看病贵”等问题。"
-        },
-        {
-          msgtype: "text",
-          msgid: "9867567917735866980_1593751929",
-          action: "send",
-          fromm: "ShiYanLing",
-          fromm_name: "石艳零",
-          tolist: "[wm4fJCBgAAmMqeyeGHUieC7bZULKwyAA]",
-          tolist_name: "乐",
-          roomid: "",
-          msgtime: "2020-07-03 12:52:10",
-          content:
-            "湖南省携手“<span style='color:red'>泰康养老</span>”为长沙市社保居民定制专属“星惠保惠民保障方案”。切实解决“看病难、看病贵”等问题。"
-        },
-        {
-          msgtype: "text",
-          msgid: "9867567917735866980_1593751929",
-          action: "send",
-          fromm: "ShiYanLing",
-          fromm_name: "石艳零",
-          tolist: "[wm4fJCBgAAmMqeyeGHUieC7bZULKwyAA]",
-          tolist_name: "乐",
-          roomid: "",
-          msgtime: "2020-07-03 12:52:10",
-          content:
-            "湖南省携手“<span style='color:red'>泰康养老</span>”为长沙市社保居民定制专属“星惠保惠民保障方案”。切实解决“看病难、看病贵”等问题。"
-        },
-        {
-          msgtype: "text",
-          msgid: "9867567917735866980_1593751929",
-          action: "send",
-          fromm: "ShiYanLing",
-          fromm_name: "石艳零",
-          tolist: "[wm4fJCBgAAmMqeyeGHUieC7bZULKwyAA]",
-          tolist_name: "乐",
-          roomid: "",
-          msgtime: "2020-07-03 12:52:10",
-          content:
-            "湖南省携手“<span style='color:red'>泰康养老</span>”为长沙市社保居民定制专属“星惠保惠民保障方案”。切实解决“看病难、看病贵”等问题。"
-        },
-        {
-          msgtype: "text",
-          msgid: "9867567917735866980_1593751929",
-          action: "send",
-          fromm: "ShiYanLing",
-          fromm_name: "石艳零",
-          tolist: "[wm4fJCBgAAmMqeyeGHUieC7bZULKwyAA]",
-          tolist_name: "乐",
-          roomid: "",
-          msgtime: "2020-07-03 12:52:10",
-          content:
-            "湖南省携手“<span style='color:red'>泰康养老</span>”为长沙市社保居民定制专属“星惠保惠民保障方案”。切实解决“看病难、看病贵”等问题。"
-        },
-        {
-          msgtype: "text",
-          msgid: "9867567917735866980_1593751929",
-          action: "send",
-          fromm: "ShiYanLing",
-          fromm_name: "石艳零",
-          tolist: "[wm4fJCBgAAmMqeyeGHUieC7bZULKwyAA]",
-          tolist_name: "乐",
-          roomid: "",
-          msgtime: "2020-07-03 12:52:10",
-          content:
-            "湖南省携手“<span style='color:red'>泰康养老</span>”为长沙市社保居民定制专属“星惠保惠民保障方案”。切实解决“看病难、看病贵”等问题。"
-        },
-        {
-          msgtype: "text",
-          msgid: "9867567917735866980_1593751929",
-          action: "send",
-          fromm: "ShiYanLing",
-          fromm_name: "石艳零",
-          tolist: "[wm4fJCBgAAmMqeyeGHUieC7bZULKwyAA]",
-          tolist_name: "乐",
-          roomid: "",
-          msgtime: "2020-07-03 12:52:10",
-          content:
-            "湖南省携手“<span style='color:red'>泰康养老</span>”为长沙市社保居民定制专属“星惠保惠民保障方案”。切实解决“看病难、看病贵”等问题。"
-        },
-        {
-          msgtype: "text",
-          msgid: "9867567917735866980_1593751929",
-          action: "send",
-          fromm: "ShiYanLing",
-          fromm_name: "石艳零",
-          tolist: "[wm4fJCBgAAmMqeyeGHUieC7bZULKwyAA]",
-          tolist_name: "乐",
-          roomid: "",
-          msgtime: "2020-07-03 12:52:10",
-          content:
-            "湖南省携手“<span style='color:red'>泰康养老</span>”为长沙市社保居民定制专属“星惠保惠民保障方案”。切实解决“看病难、看病贵”等问题。"
-        },
-        {
-          msgtype: "text",
-          msgid: "9867567917735866980_1593751929",
-          action: "send",
-          fromm: "ShiYanLing",
-          fromm_name: "石艳零",
-          tolist: "[wm4fJCBgAAmMqeyeGHUieC7bZULKwyAA]",
-          tolist_name: "乐",
-          roomid: "",
-          msgtime: "2020-07-03 12:52:10",
-          content:
-            "湖南省携手“<span style='color:red'>泰康养老</span>”为长沙市社保居民定制专属“星惠保惠民保障方案”。切实解决“看病难、看病贵”等问题。"
-        },
-        {
-          msgtype: "text",
-          msgid: "9867567917735866980_1593751929",
-          action: "send",
-          fromm: "ShiYanLing",
-          fromm_name: "石艳零",
-          tolist: "[wm4fJCBgAAmMqeyeGHUieC7bZULKwyAA]",
-          tolist_name: "乐",
-          roomid: "",
-          msgtime: "2020-07-03 12:52:10",
-          content:
-            "湖南省携手“<span style='color:red'>泰康养老</span>”为长沙市社保居民定制专属“星惠保惠民保障方案”。切实解决“看病难、看病贵”等问题。"
-        },
-        {
-          msgtype: "text",
-          msgid: "9867567917735866980_1593751929",
-          action: "send",
-          fromm: "ShiYanLing",
-          fromm_name: "石艳零",
-          tolist: "[wm4fJCBgAAmMqeyeGHUieC7bZULKwyAA]",
-          tolist_name: "乐",
-          roomid: "",
-          msgtime: "2020-07-03 12:52:10",
-          content:
-            "湖南省携手“<span style='color:red'>泰康养老</span>”为长沙市社保居民定制专属“星惠保惠民保障方案”。切实解决“看病难、看病贵”等问题。"
-        },
-        {
-          msgtype: "text",
-          msgid: "9867567917735866980_1593751929",
-          action: "send",
-          tolist: "ShiYanLing",
-          fromm_name: "石艳零",
-          fromm: "[wm4fJCBgAAmMqeyeGHUieC7bZULKwyAA]",
-          tolist_name: "乐",
-          roomid: "",
-          msgtime: "2020-07-03 12:52:10",
-          content:
-            "湖南省携手“<span style='color:red'>泰康养老</span>”为长沙市社保居民定制专属“星惠保惠民保障方案”。切实解决“看病难、看病贵”等问题。"
+    lineCheck(list,index) {
+        //模拟获取到的数据
+        //将数据改成聊天组件需要的格式
+        let resData = {};
+        let arr = [];
+        list.map((item, index) => {
+            if (this.ind) {
+                resData.customName = item.fromm_name;  //发送者
+                resData.staffName = item.tolist_name;  //接收者
+            }
+            resData.customName = item.tolist_name;
+            resData.staffName = item.fromm_name;
+            arr[index] = { //wm是外部人员
+                role: item.tolist.indexOf("wm") === -1 ? "staff" : "custom",
+                msgtime: item.msgtime,
+                content: item.content
+            };
+        });
+        resData.chatcontent = arr;
+        //将改好的数据的赋值于聊天区域数据
+        if(index==1){
+          this.chatInformation=[]
+          this.chatInformation.push(resData);
+        }else if(index==2){
+            this.chatInformation[0].chatcontent = this.chatInformation[0].chatcontent.concat(arr);
         }
-      ];
-      //将数据改成聊天组件需要的格式
-      let resData = {};
-      let arr = [];
-      res.map((item, index) => {
-        resData.customName = item.tolist_name;
-        resData.staffName = item.fromm_name;
-
-        arr[index] = {
-          role: item.tolist.indexOf("[") === -1 ? "custom" : "staff",
-          msgtime: item.msgtime,
-          content: item.content
-        };
-      });
-      resData.chatcontent = arr;
-      //将改好的数据的赋值于聊天区域数据
-      this.getData.chatInformation.push(resData);
+        // this.chatInformation[0].chatcontent.reverse()
+       
+    },
+    pageChange(val){ //聊天改变 再次请求数据
+        if(val=='add'){
+            this.sessCheck({dialogue_id:this.dialog_id},2)
+        }
     }
   }
 };
@@ -386,7 +226,7 @@ export default {
 <style lang="scss" rel="stylesheet/scss" >
 @import "../assets/scss/sessionBack.scss";
 .passiveResponse .el-col {
-  height: calc(100vh - 204px);
+  height: calc(100vh - 177px);
 }
 .passiveResponse .el-menu-vertical-demo {
   height: auto;

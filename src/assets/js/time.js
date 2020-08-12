@@ -20,6 +20,14 @@ export function tommorrow(){  //明天
     return tomorrow
 }
 
+export function tommorrowDetail(){  //明天
+    //明天的时间
+    let myDate = new Date();
+    myDate.setTime(myDate.getTime()+24*60*60*1000);
+    let tommorrowDetail = myDate.getFullYear()+"-" + (myDate.getMonth()+1) + "-" + myDate.getDate()+" "+myDate.getHours() + "-" + myDate.getMinutes() + "-" + myDate.getSeconds();
+    return tommorrowDetail
+}
+
 export function weekMon(){ //本周一
     let now = new Date();
     let nowTime = now.getTime() ;
