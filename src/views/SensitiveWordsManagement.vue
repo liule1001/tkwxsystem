@@ -77,7 +77,7 @@ export default {
             }else if(sign==='edit'){
               this.edit(e.value,id)
             }
-            
+          }
         })
 
         .catch(() => { //点击取消按钮
@@ -91,6 +91,14 @@ export default {
         });
     },
     cancle(item) { // 删除接口调用
+      // this.$http.post({url:'/ceping-0.0.1-SNAPSHOT/ceping/save'}).then((response)=> {
+      //     console.log("response", response);
+      //     this.$message({
+      //       type: "info",
+      //       message: "删除成功"
+      //     });
+      //     this.dataSource[index].isShowBtn = false;
+      //   });
       this.$http("/text/deleteSensitiveWord?id="+item.id, {}, "post")
       .then(response => {
           console.log("response", response);
