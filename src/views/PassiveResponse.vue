@@ -81,10 +81,10 @@ export default {
       page:1, //当前页数
       dialog_id:"" ,//获取聊天内容需要提供ID
       isContinueGetList:true ,//是否一直滚动的时候调用接口
-      // startTime:today(),
-      // endTime:tommorrow() ,
-      startTime:"2020-07-01",
-      endTime:"2020-07-30" ,
+      startTime:today(),
+      endTime:tommorrow() ,
+      // startTime:"2020-07-01",
+      // endTime:"2020-07-30" ,
     };
   },
   components: {
@@ -98,8 +98,8 @@ export default {
   },
   mounted() {
     this.getStaffList() //获取员工信息
-    // this.getCoversationList(today(),tommorrow()) //刚进页面默认选择当天的日期进行筛选  传当天和下一天
-    this.getCoversationList("2020-07-19","2020-07-20")
+    this.getCoversationList(today(),tommorrow()) //刚进页面默认选择当天的日期进行筛选  传当天和下一天
+    // this.getCoversationList("2020-07-19","2020-07-20")
   },
   methods: {
     getStaffList(){ //获取员工列表
@@ -230,7 +230,7 @@ export default {
 }
 .passiveResponse .el-menu-vertical-demo {
   height: auto;
-  max-height: calc(100vh - 255px);
+  max-height: calc(100vh - 228px);
   overflow-y: auto;
 }
 .passiveResponse .staffList,
