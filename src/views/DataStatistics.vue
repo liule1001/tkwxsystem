@@ -31,7 +31,8 @@
       <el-button size="small" @click="select()">查询</el-button>
       <el-button size="small" @click="download()">导出Excle</el-button>
     </div>
-    <el-table :data="tableData" style="width: 100%">
+    <div class="tableBox">
+    <el-table :data="tableData" style="width: 100%" height="calc(100vh - 180px)">
       <el-table-column prop="user_name" label="成员姓名" align="center"></el-table-column>
       <el-table-column prop="userid" label="TK号" align="center"></el-table-column>
       <el-table-column label="通讯录" align="center">
@@ -77,6 +78,7 @@
         </el-table-column>
       </el-table-column>
     </el-table>
+    </div>
   </div>
 </template>
 
@@ -172,7 +174,6 @@ export default {
 </script>
 <style lang="scss" rel="stylesheet/scss" scoped>
 .dataStatistics {
-    height: 600px;
   .elRow {
     margin: 0 0 20px 0;
     .el-radio {
@@ -189,5 +190,9 @@ export default {
       }
     }
   }
+//   .tableBox {
+//       max-height: calc(100vh - 180px);
+//       overflow-y: auto;
+//   }
 }
 </style>

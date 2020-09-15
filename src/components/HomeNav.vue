@@ -1,7 +1,7 @@
 <template>
     <div class="left-aside">
         <el-menu
-            default-active="2"
+            :default-active="activeRoute"
             :default-openeds="openMeun"
             :router="true"
             class="el-menu-vertical-demo"
@@ -46,15 +46,19 @@ export default {
         return {
             openMeun: ["3", "4"],
             onRoutes: "/dataStatistics",
+            activeRoute:"/dataStatistics"
         };
     },
     methods: {},
     mounted() {
-        // console.log(this.$route.path);
         // 指定默认页面路由
         if (this.$route.path === "/" || this.$route.path === "/Home") {
             this.$router.replace(this.onRoutes);
+            this.activeRoute = this.onRoutes;
+        }else {
+            this.activeRoute = this.$route.path;
         }
+
     }
 };
 </script>
