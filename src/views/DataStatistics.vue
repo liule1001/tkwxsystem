@@ -83,7 +83,7 @@
 
 <script>
 import {today, yestoday, tommorrow, weekMon, weekNextMon, monthFirst, monthNextFirst} from "@/assets/js/time.js"
-
+import axios from 'axios'
 export default {
   data() {
     return {
@@ -91,10 +91,22 @@ export default {
       startTime: "",
       endTime: "",
       endTimeTom:"",//最后一天的后一天
-      tableData: []
+      tableData: [],
+      tempToken: "eWluam0wMzp0a3Atb3A6dGhpcmQ6MTYwMDA1MTM5ODUyMQ%3D%3D"
     };
   },
+  created(){
+      
+  },
   mounted() {
+      // 判断用户是否登录
+      axios({
+          method: 'get',
+          url: '/api/login/loginin',
+          headers:{
+              tempToken: this.tempToken
+          }
+      })
     this.getTableData(today(),tommorrow())
   },
   methods: {
@@ -160,6 +172,7 @@ export default {
 </script>
 <style lang="scss" rel="stylesheet/scss" scoped>
 .dataStatistics {
+    height: 600px;
   .elRow {
     margin: 0 0 20px 0;
     .el-radio {

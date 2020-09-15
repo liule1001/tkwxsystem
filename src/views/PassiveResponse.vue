@@ -12,7 +12,6 @@
       <el-col class="staffList">
         <h5>员工列表</h5>
         <el-menu
-          default-active="2"
           class="el-menu-vertical-demo"
           mode="vertical"
           background-color="#ddd"
@@ -39,7 +38,6 @@
       <el-col class="sessionList">
         <h5>会话列表</h5>
         <el-menu
-          default-active="2"
           class="el-menu-vertical-demo"
           background-color="#ddd"
           text-color="#333"

@@ -15,9 +15,9 @@
                     <template slot="title">
                         <span>{{key}}</span>
                     </template>
-                    <el-menu-val v-for="(v,i) in val" :key="i" @click="checkClick(String(v.userid))">
+                    <el-menu-item v-for="(v,i) in val" :key="i" @click="checkClick(String(v.userid))">
                         <staff :main="v" />
-                    </el-menu-val>
+                    </el-menu-item>
                 </el-submenu>
             </el-menu>
         </el-col>
@@ -175,6 +175,7 @@ export default {
 .sessionBack .staffList,
 .sessionBack .sessionList {
     .el-menu-vertical-demo {
+        height: auto;
         max-height: calc(100vh - 228px);
         overflow-y: auto;
     }
@@ -183,6 +184,7 @@ export default {
     }
     .el-menu-item {
         padding: 0 15px !important;
+        height: 60px;
         border-bottom: 1px solid #ccc;
         * {
             vertical-align: top;

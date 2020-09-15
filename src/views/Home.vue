@@ -50,6 +50,8 @@ h3 {
 }
 .el-header {
     height: 70px !important;
+    background: #252a2f;
+    color: #ffffff;
 }
 .el-container {
     height: 100%;
@@ -57,10 +59,6 @@ h3 {
 }
 .el-aside {
     background: #252a2f;
-}
-.el-header {
-    background: #252a2f;
-    color: #ffffff;
 }
 .el-main {
     // background: #efefef;
