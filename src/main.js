@@ -11,7 +11,7 @@ import './assets/scss/reset.scss'
 Vue.use(ElementUI);
 Vue.prototype.$http = Axios
 Vue.config.productionTip = false
-
+// Vue.http.options.root = process.env.VUE_APP_API_URL;
 new Vue({
   router,
   store,
