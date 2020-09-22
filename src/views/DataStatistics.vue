@@ -85,8 +85,7 @@
 
 <script>
 import {today, yestoday, tommorrow, weekMon, weekNextMon, monthFirst, monthNextFirst} from "@/assets/js/time.js"
-import {getQueryVariable} from "@/assets/js/common.js"
-import axios from 'axios'
+
 export default {
   data() {
     return {
@@ -98,33 +97,9 @@ export default {
       tempToken: ""
     };
   },
-  created(){
-      this.tempToken = getQueryVariable("tempToken");
-      console.log(this.tempToken);
-  },
+  
   mounted() {
-      // 判断用户是否登录
-      axios({
-          method: 'get',
-          url: '/api/login/loginin',
-          headers:{
-              tempToken: this.tempToken
-          }
-      }).then((data)=>{
-          if(data.data.flag !== 200){
-                this.$confirm('检测到您没有登录，是否需要跳转到登录页面？', '提示', {
-                    distinguishCancelAndClose: true,
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消'
-                })
-                .then(() => {
-                    window.location.href = "http://10.130.226.35:8301/tkp-op/#/login"
-                })
-                .catch(() => {  // 点击取消或关闭
-                    
-                });
-          }
-      })
+      
     this.getTableData(today(),tommorrow())
   },
   methods: {

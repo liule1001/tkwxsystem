@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import axios from 'axios'
+import {getQueryVariable} from "@/assets/js/common.js"
 const Home = () =>import('../views/Home.vue')
 const Error = () =>import('../views/404.vue')
 const dataStatistics = () =>import('../views/DataStatistics.vue')
@@ -53,9 +55,26 @@ const routes = [{
 ]
 
 const router = new VueRouter({
-    mode: 'history',
+    mode: 'hash',
     base: process.env.BASE_URL,
     routes
+})
+//访问每个页面的时候判断是否登录了
+router.afterEach(()=>{
+    const tempToken = getQueryVariable("tempToken");
+    // 判断用户是否登录
+    axios({
+        method: 'get',
+        url: "/login/loginin", // 本地
+      //   url: 'http://wxsit.pension.taikang.com/search/login/loginin',  //测试
+        headers:{
+            tempToken: tempToken
+        }
+    }).then((data)=>{
+        if(data.data.flag !== 200){
+            window.location.href = "http://10.130.226.35:8301/tkp-op/#/login"
+        }
+    })
 })
 // 解决多次点击相同的导航报错问题
 const originalPush = VueRouter.prototype.push

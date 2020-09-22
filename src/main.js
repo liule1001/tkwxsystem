@@ -2,16 +2,18 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import axios from 'axios'
 import Axios from './api/ajax'
 import ElementUI from 'element-ui';
+import envObj from './config/env.js'
 
 import 'element-ui/lib/theme-chalk/index.css';
 import './assets/scss/reset.scss'
 
 Vue.use(ElementUI);
+axios.defaults.baseURL =  envObj[process.env.NODE_ENV];
 Vue.prototype.$http = Axios
 Vue.config.productionTip = false
-// Vue.http.options.root = process.env.VUE_APP_API_URL;
 new Vue({
   router,
   store,

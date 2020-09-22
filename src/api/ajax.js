@@ -1,9 +1,11 @@
 import axios from 'axios'
+
 // axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? '' : '/api'
+console.log(process.env.NODE_ENV);
 export default function ajax(url, data = {}, type = 'GET') {
 
     return new Promise(function (resolve, reject) {
-        url = '/api' + url;
+        // url = envObj[process.env.NODE_ENV] + url;
         // 执行异步ajax请求
         let promise;
         if (type === 'GET') {

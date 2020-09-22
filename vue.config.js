@@ -1,6 +1,7 @@
 module.exports = {
     runtimeCompiler: true,
-    publicPath: '/', // 设置打包文件相对路径
+    publicPath: process.env.NODE_ENV === 'dev' ? "/" : "/tkp-file-search",
+    // publicPath: "/" ,
     devServer: {
         // open: process.platform === 'darwin',
         // host: 'localhost',
@@ -14,7 +15,7 @@ module.exports = {
                 ws: true,
                 // 把api开头的路径用''代替/api,以访问到后端接口
                 pathRewrite: {
-                    '^/api': ''
+                    '/api': ''
                 }
             }
         }
