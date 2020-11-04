@@ -62,17 +62,21 @@ const router = new VueRouter({
 //访问每个页面的时候判断是否登录了
 router.afterEach(()=>{
     const tempToken = getQueryVariable("tempToken");
+    console.log('tempToken', tempToken)
     // 判断用户是否登录
     axios({
         method: 'get',
         url: "/login/loginin", // 本地
-      //   url: 'http://wxsit.pension.taikang.com/search/login/loginin',  //测试
+        // url: 'http://wxsit.pension.taikang.com/search/login/loginin',  //测试
         headers:{
             tempToken: tempToken
         }
     }).then((data)=>{
+        console.log('loginData', data)
         if(data.data.flag !== 200){
-            window.location.href = "http://10.130.226.35:8301/tkp-op/#/login"
+            // window.location.href = "http://10.130.226.35:8301/tkp-op/#/login"  //测试
+            window.location.href = "http://wxsit.pension.taikang.com/tkp-op/#/login" // 测试
+            
         }
     })
 })

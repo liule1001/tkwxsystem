@@ -29,7 +29,7 @@
       </div>
 
       <el-button size="small" @click="select()">查询</el-button>
-      <el-button size="small" @click="download()">导出Excle</el-button>
+      <el-button size="small" @click="download()">导出Excel</el-button>
     </div>
     <div class="tableBox">
     <el-table :data="tableData" style="width: 100%" height="calc(100vh - 180px)">
