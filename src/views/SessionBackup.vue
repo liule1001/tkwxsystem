@@ -3,7 +3,9 @@
         <el-col class="staffList">
             <h5>员工列表</h5>
             <!-- horizontal,vertical -->
+            
             <el-menu
+                v-if="JSON.stringify(staffList) != {}"
                 class="el-menu-vertical-demo"
                 mode="vertical"
                 background-color="#ddd"
@@ -20,10 +22,13 @@
                     </el-menu-item>
                 </el-submenu>
             </el-menu>
+            <h4 v-else>暂无数据</h4>
         </el-col>
         <el-col class="sessionList">
             <h5>会话列表</h5>
+            
             <el-menu
+                v-if="checkMain.length"
                 class="el-menu-vertical-demo"
                 background-color="#ddd"
                 text-color="#333"
@@ -33,6 +38,7 @@
                     <Session :main="item" />
                 </el-menu-item>
             </el-menu>
+            <h4 v-else>暂无数据</h4>
         </el-col>
         <el-col>
             <h5>聊天记录</h5>
@@ -85,6 +91,8 @@ export default {
             // setInterval(() => {
             this.$http("/user/users").then(response => {
                 this.staffList = response.data;
+                console.log(response.data, "staffList")
+                console.log(JSON.stringify(response.data));
             });
             // }, 1000);
         },

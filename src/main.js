@@ -11,7 +11,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import './assets/scss/reset.scss'
 
 Vue.use(ElementUI);
-axios.defaults.baseURL =  envObj[process.env.NODE_ENV];
+axios.defaults.baseURL =  envObj[process.env.NODE_ENV].axiosUrl;
 Vue.prototype.$http = Axios
 Vue.config.productionTip = false
 new Vue({

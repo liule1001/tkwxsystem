@@ -10,3 +10,6 @@ export function getQueryVariable(variable){
        }
        return(false);
 }
+export function observeToData(item){
+    return JSON.parse(JSON.stringify(item))
+}

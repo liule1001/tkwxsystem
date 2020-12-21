@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import axios from 'axios'
+import envObj from '../config/env'
 import {getQueryVariable} from "@/assets/js/common.js"
 const Home = () =>import('../views/Home.vue')
 const Error = () =>import('../views/404.vue')
@@ -63,6 +64,7 @@ const router = new VueRouter({
 router.afterEach(()=>{
     const tempToken = getQueryVariable("tempToken");
     console.log('tempToken', tempToken)
+    console.log('envObj[process.env.NODE_ENV].loginUrl', envObj[process.env.NODE_ENV].loginUrl)
     // 判断用户是否登录
     axios({
         method: 'get',
@@ -74,9 +76,7 @@ router.afterEach(()=>{
     }).then((data)=>{
         console.log('loginData', data)
         if(data.data.flag !== 200){
-            // window.location.href = "http://10.130.226.35:8301/tkp-op/#/login"  //测试
-            window.location.href = "http://wxsit.pension.taikang.com/tkp-op/#/login" // 测试
-            
+            window.location.href = envObj[process.env.NODE_ENV].loginUrl;
         }
     })
 })
