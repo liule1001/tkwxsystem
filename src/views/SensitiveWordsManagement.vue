@@ -24,11 +24,7 @@ export default {
   data() {
     return {
       popTitle: "",
-      dataSource: [
-        { data: "123457890-0987654", isShowBtn: false },
-        { data: "1", isShowBtn: false },
-        { data: "2", isShowBtn: false }
-      ]
+      dataSource: []
     };
   },
   mounted(){
