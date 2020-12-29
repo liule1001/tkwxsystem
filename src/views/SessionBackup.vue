@@ -5,7 +5,7 @@
             <!-- horizontal,vertical -->
             
             <el-menu
-                v-if="JSON.stringify(staffList) != {}"
+                v-if="JSON.stringify(staffList) != {} && staffList"
                 class="el-menu-vertical-demo"
                 mode="vertical"
                 background-color="#ddd"
@@ -28,7 +28,7 @@
             <h5>会话列表</h5>
             
             <el-menu
-                v-if="checkMain.length"
+                v-if="checkMain && checkMain.length"
                 class="el-menu-vertical-demo"
                 background-color="#ddd"
                 text-color="#333"
@@ -101,9 +101,10 @@ export default {
             this.ind = ind;
             this.isContinueGetList=true //更改联系人时 可以获取回话列表
             this.$http("/user/follows?userId="+ind).then(response => {
+                console.log('response.data', response.data)
                 this.checkMain = response.data;
             });
-            this.chatInformation=[{}] //聊天清空
+            this.chatInformation=[] //聊天清空
         },
         //点击会话列表是再次获取聊天区域的数据
         sessCheck(item,index) {
@@ -125,6 +126,7 @@ export default {
                     dialogue_id:item.dialogue_id
                 }, "post")
                 .then(response => {
+                    console.log(response.data, 'response.data')
                     if(response.data.length>0){
                         this.lineCheck(response.data,index);
                         this.isContinueGetList=true
@@ -179,6 +181,9 @@ export default {
 
 .sessionBack .el-col {
   height: calc(100vh - 177px);
+}
+.sessionBack h4 {
+    text-align: center;
 }
 .sessionBack .staffList,
 .sessionBack .sessionList {

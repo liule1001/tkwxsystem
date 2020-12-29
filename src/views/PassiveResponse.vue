@@ -12,6 +12,7 @@
       <el-col class="staffList">
         <h5>员工列表</h5>
         <el-menu
+          v-if="JSON.stringify(staffList) != {} && staffList"
           class="el-menu-vertical-demo"
           mode="vertical"
           background-color="#ddd"
@@ -34,10 +35,12 @@
             </el-menu-item>-->
           </el-submenu>
         </el-menu>
+        <h4 v-else>暂无数据</h4>
       </el-col>
       <el-col class="sessionList">
         <h5>会话列表</h5>
         <el-menu
+        v-if='currentCoversation.length'
           class="el-menu-vertical-demo"
           background-color="#ddd"
           text-color="#333"
@@ -51,6 +54,7 @@
             <Session :main="item" />
           </el-menu-item>
         </el-menu>
+        <h4 v-else>暂无数据</h4>
       </el-col>
       <el-col>
         <h5>聊天记录</h5>
@@ -225,6 +229,9 @@ export default {
 @import "../assets/scss/sessionBack.scss";
 .passiveResponse .el-col {
   height: calc(100vh - 177px);
+}
+.passiveResponse h4 {
+    text-align: center;;
 }
 .passiveResponse .el-menu-vertical-demo {
   height: auto;

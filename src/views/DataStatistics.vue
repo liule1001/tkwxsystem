@@ -32,7 +32,12 @@
       <el-button size="small" @click="download()">导出Excel</el-button>
     </div>
     <div class="tableBox">
-    <el-table :data="tableData" style="width: 100%" height="calc(100vh - 180px)">
+    <el-table 
+    :data="tableData" 
+    style="width: 100%" 
+    v-loading="loading"
+    height="calc(100vh - 180px)"
+    >
       <el-table-column prop="user_name" label="成员姓名" align="center"></el-table-column>
       <el-table-column prop="userid" label="TK号" align="center"></el-table-column>
       <el-table-column label="通讯录" align="center">
@@ -94,7 +99,8 @@ export default {
       endTime: "",
       endTimeTom:"",//最后一天的后一天
       tableData: [],
-      tempToken: ""
+      tempToken: "",
+      loading: true
     };
   },
   
@@ -104,9 +110,11 @@ export default {
   },
   methods: {
     getTableData(startTime,endTime) { //获取表格数据  不好用
+        this.loading = true
       this.$http("/text/statistics?time_between="+startTime+"&time_and="+endTime)
       .then(response => {
         this.tableData=response.data
+        this.loading = false
       });
     },
     timeChange(e){  //单选按钮事件变化事件
@@ -181,9 +189,5 @@ export default {
       }
     }
   }
-//   .tableBox {
-//       max-height: calc(100vh - 180px);
-//       overflow-y: auto;
-//   }
 }
 </style>

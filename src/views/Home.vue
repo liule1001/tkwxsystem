@@ -62,6 +62,7 @@ h3 {
 }
 .el-main {
     // background: #efefef;
+    height: calc(100vh - 80px);
 }
 .home-aside {
     width: 14% !important;

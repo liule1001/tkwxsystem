@@ -1,8 +1,8 @@
 <template>
-  <div class="about">
+  <div class="triggeSensitiveWords">
     <div>
       <!-- max-height="500" -->
-      <el-table :data="tableData" style="width: 100%" height="380px" border>
+      <el-table :data="tableData" style="width: 100%" border>
         <el-table-column prop="fromm_name" label="发送人" align="center"></el-table-column>
         <el-table-column prop="formmIdentity" label="发送人身份" align="center"></el-table-column>
         <el-table-column prop="msgtime" label="发送时间" align="center">
@@ -17,7 +17,7 @@
         </el-table-column>
         <el-table-column prop="tolist_name" label="接收人" align="center"></el-table-column>
         <el-table-column prop="tolistIdentity" label="接收人身份" align="center"></el-table-column>
-        <el-table-column fixed="right" label="操作" align="center">
+        <el-table-column  label="操作" align="center">
           <template slot-scope="scope">
             <el-button @click="details(scope.row,scope.$index)" type="text" size="small">查看详情</el-button>
           </template>
@@ -94,7 +94,7 @@ export default {
               msgtime: item.msgtime.replace(/\s+/g, "<br/>"),
               content: item.content,
               tolist: item.tolist,
-              tolist_name: item.tolist_name || '',
+              tolist_name: item.tolist_name || '--',
               tolistIdentity: item.tolist.match("wm4f") ? "客户" : "员工",
               dialogue_id:item.dialogue_id , //根据ID查询聊天记录
               msgtimes:item.msgtime
@@ -204,5 +204,8 @@ export default {
 .pagination {
   float: right;
   margin-top: 10px;
+}
+.triggeSensitiveWords th {
+    background: #F5F7FA;
 }
 </style>
