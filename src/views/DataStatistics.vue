@@ -90,7 +90,7 @@
 
 <script>
 import {today, yestoday, tommorrow, weekMon, weekNextMon, monthFirst, monthNextFirst} from "@/assets/js/time.js"
-
+import envObj from "@/config/env.js"
 export default {
   data() {
     return {
@@ -147,7 +147,9 @@ export default {
     getExcel(startTime,endTime){ //下载Excel
       let elink = document.createElement('a');
       elink.download = "download.xls";
-      elink.href = `http://139.9.138.74:8080/text/downloadExcel?time_between=${startTime}&time_and=${endTime}`;
+    //   elink.href = `http://139.9.138.74:8080/text/downloadExcel?time_between=${startTime}&time_and=${endTime}`;
+      elink.href = `${envObj[process.env.NODE_ENV].downLoadExcelUrl}/text/downloadExcel?time_between=${startTime}&time_and=${endTime}`;
+      elink.target = "_blank";
       elink.click();
     },
     download(){  //点击下载按钮
